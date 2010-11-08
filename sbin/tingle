@@ -25,6 +25,8 @@ case $action in
     check)
         if ${TINGLE_PREFIX}/lib/tingle/check-updates ; then
             debug "No pending updates"
+        else
+            exit 1
         fi
     ;;
     warm)
