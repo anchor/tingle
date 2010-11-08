@@ -10,8 +10,8 @@ and is usable by human and machine operators alike.
 
 tingle was designed to take aggressive charge over an environment 
 scaling many hundreds of heterogeneous systems.  Carefully 
-orchestrated autonomous operation is possible with the aid of tools 
-like Func or The Marionette Collective.  tingle excels in 
+orchestrated autonomous operation is possible with the aid of tools like 
+[Func][] or [The Marionette Collective][].  tingle excels in 
 environments where the risk and cost of a single compromised system 
 exceeds the likelihood and cost of a faulty update (regression).
 
@@ -26,6 +26,9 @@ tingle hook scripts and executed at precise points in the patch process.
 For instance, a site's configuration management system could distribute 
 a tingle hook to have a host temporarily check itself out of the site's 
 availability monitoring system before rebooting.
+
+[Func]: https://fedorahosted.org/func/
+[The Marionette Collective]: http://marionette-collective.org/
 
 
 ## Supported operating systems
