@@ -1,3 +1,5 @@
 *.deb
+build-stamp
+configure-stamp
 debian/tingle
 debian/tingle.debhelper.log
