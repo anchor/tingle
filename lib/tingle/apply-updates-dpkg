@@ -17,7 +17,7 @@ export DEBIAN_FRONTEND=noninteractive
 # one stable release to another.  Configuring apt sources with actual 
 # distribution names, like `lenny' or `squeeze', is accepted practice.
 if egrep -R '(experimental|(un)?stable|testing)' \
-  /etc/apt/sources.list /etc/apt/sources.list.d ; then
+  /etc/apt/sources.list /etc/apt/sources.list.d 2>/dev/null ; then
     error "Use distribution names (e.g.: lenny) over symbolic " \
 "names (e.g.: stable) in your apt sources."
 fi
