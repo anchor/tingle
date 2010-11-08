@@ -1,0 +1,26 @@
+#!/bin/bash
+
+set -e
+
+. ${TINGLE_PREFIX:="/usr"}/lib/tingle/common
+
+usage() {
+    cat - >&2 <<EOF
+Usage: check-updates-rpm
+EOF
+    exit 2
+}
+
+do_or_die /usr/bin/yum clean headers
+do_or_die /usr/bin/yum clean dbcache
+do_or_die /usr/bin/yum clean metadata
+
+if ! is_interactive ; then
+    exec 2>/dev/null
+fi
+if [ $(/usr/bin/yum -q check-update | wc -l) -gt 0 ]; then
+    exit 1
+fi
+exec 2>&4
+
+# vim:et:sts=4:sw=4:

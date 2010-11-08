@@ -1,0 +1,57 @@
+#!/bin/sh
+
+set -e
+
+. ${TINGLE_PREFIX:="/usr"}/lib/tingle/common
+
+usage() {
+    cat - >&2 <<EOF
+Usage: tingle ACTION
+
+       Valid actions include check, warm, apply, and reboot.
+
+       See tingle(8).
+EOF
+    exit 2
+}
+
+if [ $# -ne 1 -o  $1 = "-h" -o $1 = "--help" ]; then
+    usage
+fi
+
+action=$1
+
+case $action in
+    check)
+        if ${TINGLE_PREFIX}/lib/tingle/check-updates ; then
+            debug "No pending updates"
+        else
+            debug "Updates pending"
+        fi
+    ;;
+    warm)
+        if ! ${TINGLE_PREFIX}/lib/tingle/check-updates ; then
+            ${TINGLE_PREFIX}/lib/tingle/warm-cache
+        fi
+    ;;
+    apply)
+        if ! ${TINGLE_PREFIX}/lib/tingle/check-updates ; then
+            ${TINGLE_PREFIX}/lib/tingle/warm-cache
+            ${TINGLE_PREFIX}/lib/tingle/apply-updates
+        fi
+    ;;
+    reboot)
+        if ! ${TINGLE_PREFIX}/lib/tingle/check-updates ; then
+            ${TINGLE_PREFIX}/lib/tingle/warm-cache
+            ${TINGLE_PREFIX}/lib/tingle/apply-updates
+            reboot-politely 10 \
+              "This system will be rebooted in ten minutes for a " \
+              "software update.\n\n" \
+              "Please save all open work and log out."
+        fi
+    ;;
+    *)
+        usage
+esac
+
+# vim:et:sts=4:sw=4:

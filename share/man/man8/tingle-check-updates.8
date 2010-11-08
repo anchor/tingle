@@ -1,0 +1,36 @@
+.\" generated with Ronn/v0.7.3
+.\" http://github.com/rtomayko/ronn/tree/0.7.3
+.
+.TH "TINGLE\-CHECK\-UPDATES" "8" "November 2010" "" ""
+.
+.SH "NAME"
+\fBtingle\-check\-updates\fR \- checks for pending updates
+.
+.P
+Part of the tingle(8) suite\.
+.
+.SH "SYNOPSIS"
+\fBtingle\fR \fBcheck\fR
+.
+.SH "DESCRIPTION"
+Returns non\-zero if the system has updates pending; otherwise, returns zero if the system is up to date\.
+.
+.P
+The following hook scripts, if they exist, will be executed when appropriate:
+.
+.IP "\(bu" 4
+\fB/etc/tingle/hooks/pre\-check\.d/*\fR
+.
+.IP "\(bu" 4
+\fB/etc/tingle/hooks/post\-check\.d/*\fR
+.
+.IP "" 0
+.
+.P
+Execution order will correspond to the lexical sort order of script file names\. Hook script failures are ignored\.
+.
+.SH "AUTHOR"
+Saj Goonatilleke \fIsg@redu\.cx\fR
+.
+.SH "SEE ALSO"
+tingle(8), tingle\-apply\-updates(8), tingle\-warm\-cache(8), reboot\-politely(8), apt\-get(8), yum(8)

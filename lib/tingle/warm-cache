@@ -1,0 +1,23 @@
+#!/bin/bash
+
+set -e
+
+. ${TINGLE_PREFIX:="/usr"}/lib/tingle/common
+
+usage() {
+    cat - >&2 <<EOF
+Usage: tingle warm
+EOF
+    exit 2
+}
+
+# XXX: Move to hooks/req-action.d
+check_free_capacity
+
+execd ${TINGLE_PREFIX}/lib/tingle/hooks/pre-warm.d
+
+invoke_os_flavour "warm-cache"
+
+execd ${TINGLE_PREFIX}/lib/tingle/hooks/post-warm.d
+
+# vim:et:sts=4:sw=4:

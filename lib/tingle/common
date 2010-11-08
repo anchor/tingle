@@ -1,0 +1,139 @@
+#!/bin/bash
+
+ABORTAG="[abort]"
+ERRTAG="[error]"
+WARNTAG="[warning]"
+
+export PATH=/sbin:/bin:/usr/sbin:/usr/bin
+
+exec 3>&1
+exec 4>&2
+
+abort() {
+    echo "$ABORTAG $@" >&4
+    exit 2
+}
+
+error() {
+    echo "$ERRTAG $@" >&4
+    exit 1
+}
+
+warning() {
+    debug "$WARNTAG $@"
+}
+
+debug() {
+    if ! is_interactive ; then
+        exec 2>/dev/null
+    fi
+
+    echo "$@" >&2
+
+    exec 2>&4
+}
+
+check_free_capacity() {
+    # Check for 100 MB (a totally arbitrary figure) of free capacity on 
+    # / and /tmp.  /tmp need not exist as a separate file system.
+    df -P | awk '/^Filesystem/ {
+          bs = $2;
+          sub(/-blocks$/, "", bs);
+      }
+      /(\/|\/tmp)$/ {
+          mount = $NF;
+          avail = $4;
+          free = int(avail * bs / 1024 / 1024);
+          print(free "\t" mount);
+      }' | while read dfinfo; do
+        dfa=($dfinfo)
+        if [ ${dfa[0]} -lt 100 ]; then
+            abort "Less than 100 MB free on ${dfa[1]}"
+        fi
+    done
+}
+
+do_or_die() {
+    # Hide the nuts-and-bots when running non-interactively.
+    if ! is_interactive ; then
+        exec 1>/dev/null
+        exec 2>&1
+        RUN_INTER="  Run interactively for verbose output."
+    fi
+
+    if ! $@ ; then
+        error "\`$@' returned non-zero.${RUN_INTER}"
+    fi
+
+    exec 1>&3
+    exec 2>&4
+}
+
+execd() {
+    exec 3>&1
+    exec 4>&2
+
+    if ! is_interactive ; then
+        exec 1>/dev/null
+        exec 2>&1
+    fi
+
+    d="$1"
+
+    if [ ! -d "$d" ] ; then
+        warning "$d is not a valid hook scripts directory"
+    else
+        debug "Scanning $d for hook scripts"
+        for i in ${d}/*; do
+            if [ -x $i ]; then
+                debug "Executing $i"
+                ( $i ) || true
+            else
+                warning "$WARNTAG $i is not executable"
+            fi
+        done
+    fi
+
+    exec 1>&3
+    exec 2>&4
+}
+
+invoke_os_flavour() {
+    BASE="$1"
+
+    OS="$(/usr/bin/facter operatingsystem 2>/dev/null)"
+    case "$OS" in
+        CentOS|RedHat)
+            SUFFIX="rpm"
+        ;;
+        Debian)
+            SUFFIX="dpkg"
+        ;;
+        *)
+            error "tingle does not recognise your operating system"
+        ;;
+    esac
+
+    FLAVA="${TINGLE_PREFIX}/lib/tingle/${BASE}-${SUFFIX}"
+    if [ -x "$FLAVA" ] ; then
+        debug "Running $(basename $FLAVA)"
+        "$FLAVA"
+    else
+        error "Could not execute $FLAVA"
+    fi
+}
+
+is_interactive() {
+    stty >/dev/null && test "${TINGLE_NONINTERACTIVE:+x}" != x && \
+      return 0
+    return 1
+}
+
+# All potentially disastrous automated processes need a killswitch 
+# within easy reach.
+KILLSWITCH="${TINGLE_PREFIX}/etc/tingle/noupdate"
+if [ -f $KILLSWITCH ]; then
+    abort "Aborting on killswitch.  Remove $KILLSWITCH and try again."
+fi
+
+# vim:et:sts=4:sw=4:

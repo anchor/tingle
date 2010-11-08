@@ -1,0 +1,50 @@
+tingle(8) - (n): a thin temporary patch
+=======================================
+
+tingle acts as a thin frontend to your operating system's native package 
+manager.  Unlike native tools, the tingle program serves only a single 
+purpose:  to keep all installed software packages up to date with 
+respect to your repository mirrors.  It does this whilst presenting a 
+simple interface, consistent across all recognised operating systems, 
+and is usable by human and machine operators alike.
+
+tingle was designed to take aggressive charge over an environment 
+scaling many hundreds of heterogeneous systems.  Carefully 
+orchestrated autonomous operation is possible with the aid of tools 
+like Func or The Marionette Collective.  tingle excels in 
+environments where the risk and cost of a single compromised system 
+exceeds the likelihood and cost of a faulty update (regression).
+
+If precise change management is a staple of your environment, ensure 
+your local package repositories contain only those updates you are 
+prepared to propagate.  Alternatively, exercise thorough use of your 
+native package manager's pinning capabilities.  tingle will gobble down 
+whatever you leave in the open.
+
+Site or host-specific maintenance procedures can be condensed into 
+tingle hook scripts and executed at precise points in the patch process.  
+For instance, a site's configuration management system could distribute 
+a tingle hook to have a host temporarily check itself out of the site's 
+availability monitoring system before rebooting.
+
+
+## Supported operating systems
+
+- CentOS and Red Hat Enterprise Linux 4 (*Nahant*)
+- CentOS and Red Hat Enterprise Linux 5 (*Tikanga*)
+- Debian 5 (*Lenny*)
+
+
+## Installation requirements
+
+* Puppet Labs' [Facter][]
+* yum-downloadonly (required only on CentOS and RHEL)
+
+[Facter]: http://www.puppetlabs.com/puppet/related-projects/facter/
+
+
+## Build requirements
+
+* UNIX manuals are generated using [Ronn][]
+
+[Ronn]: https://github.com/rtomayko/ronn/

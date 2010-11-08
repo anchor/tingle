@@ -1,0 +1,37 @@
+#!/bin/sh
+
+set -e
+
+usage() {
+    cat - >&2 <<EOF
+Usage: reboot-politely
+  (or) reboot-politely MESSAGE
+  (or) reboot-politely MINUTES MESSAGE
+EOF
+    exit 2
+}
+
+TIME=1
+
+if [ $# -eq 0 ]; then
+    MESSAGE="This system will be rebooted in one minute.\n\n\
+Please save all open work and log out."
+elif [ $# -eq 1 ]; then
+    if [ $1 = "-h" -o $1 = "--help" ]; then
+        usage
+    fi
+    MESSAGE="$1"
+elif [ $# -eq 2 ]; then
+    TIME="$1"
+    MESSAGE="$2"
+fi
+
+if ! echo $TIME | egrep -q '^[[:digit:]]+$'; then
+    usage
+fi
+
+/sbin/shutdown -fr "$MESSAGE" "+${TIME}"
+
+echo "Reboot pending.  Use \`shutdown -c' to abort."
+
+# vim:et:sts=4:sw=4:

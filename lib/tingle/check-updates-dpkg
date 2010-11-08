@@ -1,0 +1,26 @@
+#!/bin/bash
+
+set -e
+
+. ${TINGLE_PREFIX:="/usr"}/lib/tingle/common
+
+usage() {
+    cat - >&2 <<EOF
+Usage: check-updates-dpkg
+EOF
+    exit 2
+}
+
+export DEBIAN_FRONTEND=noninteractive
+
+do_or_die /usr/bin/apt-get update
+
+if ! is_interactive ; then
+    exec 2>/dev/null
+fi
+if [ $(/usr/bin/apt-get -qqs dist-upgrade | wc -l) -gt 0 ]; then
+    exit 1
+fi
+exec 2>&4
+
+# vim:et:sts=4:sw=4:

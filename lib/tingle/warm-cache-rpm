@@ -1,0 +1,20 @@
+#!/bin/bash
+
+set -e
+
+. ${TINGLE_PREFIX:="/usr"}/lib/tingle/common
+
+usage() {
+    cat - >&2 <<EOF
+Usage: warm-cache-rpm
+EOF
+    exit 2
+}
+
+do_or_die /usr/bin/yum clean headers
+do_or_die /usr/bin/yum clean dbcache
+do_or_die /usr/bin/yum clean metadata
+
+do_or_die /usr/bin/yum update -y --downloadonly
+
+# vim:et:sts=4:sw=4:

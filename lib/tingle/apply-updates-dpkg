@@ -1,0 +1,30 @@
+#!/bin/bash
+
+set -e
+
+. ${TINGLE_PREFIX:="/usr"}/lib/tingle/common
+
+usage() {
+    cat - >&2 <<EOF
+Usage: apply-updates-dpkg
+EOF
+    exit 2
+}
+
+export DEBIAN_FRONTEND=noninteractive
+
+# dist-upgrade is perfectly safe so long as we do not dist-upgrade from 
+# one stable release to another.  Configuring apt sources with actual 
+# distribution names, like `lenny' or `squeeze', is accepted practice.
+if egrep -R '(experimental|(un)?stable|testing)' \
+  /etc/apt/sources.list /etc/apt/sources.list.d ; then
+    error "Use distribution names (e.g.: lenny) over symbolic " \
+"names (e.g.: stable) in your apt sources."
+fi
+
+do_or_die /usr/bin/apt-get update
+
+do_or_die /usr/bin/apt-get -o APT::Get::Show-Upgraded=true \
+  -y dist-upgrade
+
+# vim:et:sts=4:sw=4:

@@ -1,0 +1,39 @@
+.\" generated with Ronn/v0.7.3
+.\" http://github.com/rtomayko/ronn/tree/0.7.3
+.
+.TH "TINGLE\-WARM\-CACHE" "8" "November 2010" "" ""
+.
+.SH "NAME"
+\fBtingle\-warm\-cache\fR \- downloads (but does not apply) pending updates
+.
+.P
+Part of the tingle(8) suite\.
+.
+.SH "SYNOPSIS"
+\fBtingle\fR \fBwarm\fR
+.
+.SH "DESCRIPTION"
+warm\-cache was designed to be run well in advance of apply\-updates, the latter of which must be run within the confines of a scheduled maintenance window\. By pre\-fetching all pending update packages, the time spent in apply\-updates (moreover, the time spent in a maintenance window) is kept to a minimum\.
+.
+.P
+This program is safe to run at any time\. Remember to splay clients to avoid inundating your local repository mirror\.
+.
+.P
+The following hook scripts, if they exist, will be executed when appropriate:
+.
+.IP "\(bu" 4
+\fB/etc/tingle/hooks/pre\-warm\.d/*\fR
+.
+.IP "\(bu" 4
+\fB/etc/tingle/hooks/post\-warm\.d/*\fR
+.
+.IP "" 0
+.
+.P
+Execution order will correspond to the lexical sort order of script file names\. Hook script failures are ignored\.
+.
+.SH "AUTHOR"
+Saj Goonatilleke \fIsg@redu\.cx\fR
+.
+.SH "SEE ALSO"
+tingle(8), tingle\-apply\-updates(8), tingle\-check\-updates(8), reboot\-politely(8), apt\-get(8), yum(8)

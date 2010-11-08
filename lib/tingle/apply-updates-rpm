@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -e
+
+. ${TINGLE_PREFIX:="/usr"}/lib/tingle/common
+
+usage() {
+    cat - >&2 <<EOF
+Usage: apply-updates-rpm
+EOF
+    exit 2
+}
+
+do_or_die /usr/bin/yum update -y
+
+# vim:et:sts=4:sw=4:

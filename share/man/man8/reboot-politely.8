@@ -1,0 +1,37 @@
+.\" generated with Ronn/v0.7.3
+.\" http://github.com/rtomayko/ronn/tree/0.7.3
+.
+.TH "REBOOT\-POLITELY" "8" "November 2010" "" ""
+.
+.SH "NAME"
+\fBreboot\-politely\fR \- what does it sound like I do?
+.
+.P
+Part of the tingle(8) suite\.
+.
+.SH "SYNOPSIS"
+\fBreboot\-politely\fR
+.
+.P
+\fBreboot\-politely\fR \fBMESSAGE\fR
+.
+.P
+\fBreboot\-politely\fR \fBMINUTES\fR \fBMESSAGE\fR
+.
+.SH "DESCRIPTION"
+reboot\-politely acts as a very thin wrapper around shutdown(8)\.
+.
+.br
+tingle(8) invokes this script to reboot the system following the successful application of software updates\.
+.
+.P
+By default, the program posts a courtesy wall message one minute before rebooting the system\. Remote logins are blocked between the time the wall is sent and the system reboots\.
+.
+.P
+You may use this program from the shell as a marginally more convenient reboot(8)\.
+.
+.SH "AUTHOR"
+Saj Goonatilleke \fIsg@redu\.cx\fR
+.
+.SH "SEE ALSO"
+tingle(8), tingle\-apply\-updates(8), tingle\-check\-updates(8), tingle\-warm\-cache(8), apt\-get(8), yum(8)

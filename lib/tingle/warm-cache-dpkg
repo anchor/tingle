@@ -1,0 +1,20 @@
+#!/bin/bash
+
+set -e
+
+. ${TINGLE_PREFIX:="/usr"}/lib/tingle/common
+
+usage() {
+    cat - >&2 <<EOF
+Usage: warm-cache-dpkg
+EOF
+    exit 2
+}
+
+export DEBIAN_FRONTEND=noninteractive
+
+do_or_die /usr/bin/apt-get update
+do_or_die /usr/bin/apt-get --download-only \
+  -o APT::Get::Show-Upgraded=true -y dist-upgrade
+
+# vim:et:sts=4:sw=4:
