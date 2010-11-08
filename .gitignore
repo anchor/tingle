@@ -1,0 +1,3 @@
+*.deb
+debian/tingle
+debian/tingle.debhelper.log
