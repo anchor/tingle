@@ -1,0 +1,12 @@
+Source: tingle
+Section: admin
+Priority: extra
+Maintainer: Anchor Systems (package signing key) <support@anchor.net.au>
+Build-Depends: debhelper (>= 7)
+Standards-Version: 3.7.3
+Homepage: https://github.com/saj/tingle
+
+Package: tingle
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, facter
+Description: A uniform package updater for system administrators
