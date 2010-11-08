@@ -44,10 +44,7 @@ case $action in
         if ! ${TINGLE_PREFIX}/lib/tingle/check-updates >/dev/null ; then
             ${TINGLE_PREFIX}/lib/tingle/warm-cache
             ${TINGLE_PREFIX}/lib/tingle/apply-updates
-            reboot-politely 10 \
-              "This system will be rebooted in ten minutes for a " \
-              "software update.\n\n" \
-              "Please save all open work and log out."
+            ${TINGLE_PREFIX}/lib/tingle/reboot
         fi
     ;;
     *)

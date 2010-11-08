@@ -7,7 +7,7 @@ doc: share/man/man8/reboot-politely.8 \
   share/man/man8/tingle-warm-cache.8
 
 install:
-	install -d $(DESTDIR)/{etc/tingle/hooks/{pre,post}-{apply,check,warm}.d,usr/lib/tingle,usr/sbin}
+	install -d $(DESTDIR)/{etc/tingle/hooks/{pre,post}-{apply,check,reboot,warm}.d,usr/lib/tingle,usr/sbin}
 	install -m0555 lib/tingle/* $(DESTDIR)/usr/lib/tingle/
 	install -m0555 sbin/* $(DESTDIR)/usr/sbin/
 
