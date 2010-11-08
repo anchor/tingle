@@ -53,9 +53,10 @@ the package cache before applying outstanding updates.
 
 ## ERROR REPORTING
 
-When started interactively at the shell, tingle will pass all output 
-from its children (apt-get, yum, and so on) through to the terminal.  
-This mode of operation is designed primarily for problem diagnosis.
+When started interactively at the shell, tingle will pass all standard 
+error output from its children (apt-get, yum, and so on) through to the 
+terminal.  This mode of operation is designed primarily for problem 
+diagnosis.
 
 tingle warnings are output to standard error and will always begin with 
 the text, `[warning]`.  Errors will similarly begin with the text, 

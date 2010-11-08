@@ -54,9 +54,10 @@ check_free_capacity() {
 }
 
 do_or_die() {
+    exec 1>/dev/null
+
     # Hide the nuts-and-bots when running non-interactively.
     if ! is_interactive ; then
-        exec 1>/dev/null
         exec 2>&1
         RUN_INTER="  Run interactively for verbose output."
     fi
