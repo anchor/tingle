@@ -30,7 +30,7 @@ if ! echo $TIME | egrep -q '^[[:digit:]]+$'; then
     usage
 fi
 
-/sbin/shutdown -fr "$MESSAGE" "+${TIME}"
+/sbin/shutdown -fr "+${TIME}" "$MESSAGE"
 
 echo "Reboot pending.  Use \`shutdown -c' to abort."
 
