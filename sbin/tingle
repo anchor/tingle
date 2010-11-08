@@ -25,23 +25,21 @@ case $action in
     check)
         if ${TINGLE_PREFIX}/lib/tingle/check-updates ; then
             debug "No pending updates"
-        else
-            debug "Updates pending"
         fi
     ;;
     warm)
-        if ! ${TINGLE_PREFIX}/lib/tingle/check-updates ; then
+        if ! ${TINGLE_PREFIX}/lib/tingle/check-updates >/dev/null ; then
             ${TINGLE_PREFIX}/lib/tingle/warm-cache
         fi
     ;;
     apply)
-        if ! ${TINGLE_PREFIX}/lib/tingle/check-updates ; then
+        if ! ${TINGLE_PREFIX}/lib/tingle/check-updates >/dev/null ; then
             ${TINGLE_PREFIX}/lib/tingle/warm-cache
             ${TINGLE_PREFIX}/lib/tingle/apply-updates
         fi
     ;;
     reboot)
-        if ! ${TINGLE_PREFIX}/lib/tingle/check-updates ; then
+        if ! ${TINGLE_PREFIX}/lib/tingle/check-updates >/dev/null ; then
             ${TINGLE_PREFIX}/lib/tingle/warm-cache
             ${TINGLE_PREFIX}/lib/tingle/apply-updates
             reboot-politely 10 \

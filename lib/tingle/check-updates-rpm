@@ -15,12 +15,24 @@ do_or_die /usr/bin/yum clean headers
 do_or_die /usr/bin/yum clean dbcache
 do_or_die /usr/bin/yum clean metadata
 
+TMP=$(mktemp tingle)
+
 if ! is_interactive ; then
     exec 2>/dev/null
 fi
-if [ $(/usr/bin/yum -q check-update | wc -l) -gt 0 ]; then
+/usr/bin/yum -q check-update | \
+  awk '/^[[:alnum:]]/ {
+      name=$1;
+      version=$2;
+      print name " " version;
+  }' | sort >$TMP
+cat $TMP
+if [ $(cat $TMP | wc -l) -gt 0 ]; then
+    rm -f $TMP
     exit 1
 fi
 exec 2>&4
+
+rm -f $TMP
 
 # vim:et:sts=4:sw=4:
