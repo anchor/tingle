@@ -13,8 +13,8 @@ EOF
 
 execd /etc/tingle/hooks/pre-reboot.d
 
-MESSAGE="This system will be rebooted in ten minutes for a "
-"software update.
+MESSAGE="This system will be rebooted in ten minutes for a \
+software update.
 
 Please save all open work and log out."
 
