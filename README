@@ -1,5 +1,5 @@
-tingle(8) - (n): a thin temporary patch
-=======================================
+tingle(8) - (n): a thin patch
+=============================
 
 tingle acts as a thin frontend to your operating system's native package 
 manager.  Unlike native tools, the tingle program serves only a single 

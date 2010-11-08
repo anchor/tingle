@@ -1,5 +1,5 @@
-tingle(8) - (n): a thin temporary patch
-=======================================
+tingle(8) - (n): a thin patch
+=============================
 
 ## SYNOPSIS
 

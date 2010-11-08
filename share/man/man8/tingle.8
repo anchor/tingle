@@ -4,7 +4,7 @@
 .TH "TINGLE" "8" "November 2010" "" ""
 .
 .SH "NAME"
-\fBtingle\fR \- (n): a thin temporary patch
+\fBtingle\fR \- (n): a thin patch
 .
 .SH "SYNOPSIS"
 \fBtingle\fR \fBcheck\fR | \fBwarm\fR | \fBapply\fR | \fBreboot\fR
@@ -44,10 +44,7 @@ Reboot the system\. See reboot\-politely(8)\.
 Later actions will automatically invoke preceding actions\. For instance, \fBtingle apply\fR will first check for pending updates and warm the package cache before applying outstanding updates\.
 .
 .SH "ERROR REPORTING"
-When started interactively at the shell, tingle will pass all output from its children (apt\-get, yum, and so on) through to the terminal\.
-.
-.br
-This mode of operation is designed primarily for problem diagnosis\.
+When started interactively at the shell, tingle will pass all standard error output from its children (apt\-get, yum, and so on) through to the terminal\. This mode of operation is designed primarily for problem diagnosis\.
 .
 .P
 tingle warnings are output to standard error and will always begin with the text, \fB[warning]\fR\. Errors will similarly begin with the text, \fB[error]\fR, or \fB[abort]\fR\.
