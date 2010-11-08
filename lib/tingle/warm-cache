@@ -14,10 +14,10 @@ EOF
 # XXX: Move to hooks/req-action.d
 check_free_capacity
 
-execd ${TINGLE_PREFIX}/lib/tingle/hooks/pre-warm.d
+execd /etc/tingle/hooks/pre-warm.d
 
 invoke_os_flavour "warm-cache"
 
-execd ${TINGLE_PREFIX}/lib/tingle/hooks/post-warm.d
+execd /etc/tingle/hooks/post-warm.d
 
 # vim:et:sts=4:sw=4:

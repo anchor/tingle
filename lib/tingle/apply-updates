@@ -14,10 +14,10 @@ EOF
 # XXX: Move to hooks/req-action.d
 check_free_capacity
 
-execd ${TINGLE_PREFIX}/lib/tingle/hooks/pre-apply.d
+execd /etc/tingle/hooks/pre-apply.d
 
 invoke_os_flavour "apply-updates"
 
-execd ${TINGLE_PREFIX}/lib/tingle/hooks/post-apply.d
+execd /etc/tingle/hooks/post-apply.d
 
 # vim:et:sts=4:sw=4:

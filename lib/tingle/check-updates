@@ -11,10 +11,10 @@ EOF
     exit 2
 }
 
-execd ${TINGLE_PREFIX}/lib/tingle/hooks/pre-check.d
+execd /etc/tingle/hooks/pre-check.d
 
 invoke_os_flavour "check-updates"
 
-execd ${TINGLE_PREFIX}/lib/tingle/hooks/post-check.d
+execd /etc/tingle/hooks/post-check.d
 
 # vim:et:sts=4:sw=4:
