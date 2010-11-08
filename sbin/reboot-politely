@@ -1,6 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e
+
+. ${TINGLE_PREFIX:="/usr"}/lib/tingle/common
 
 usage() {
     cat - >&2 <<EOF
@@ -11,10 +13,11 @@ EOF
     exit 2
 }
 
-TIME=1
+MINUTES=1
 
 if [ $# -eq 0 ]; then
-    MESSAGE="This system will be rebooted in one minute.\n\n\
+    MESSAGE="This system will reboot in one minute.
+
 Please save all open work and log out."
 elif [ $# -eq 1 ]; then
     if [ $1 = "-h" -o $1 = "--help" ]; then
@@ -22,16 +25,35 @@ elif [ $# -eq 1 ]; then
     fi
     MESSAGE="$1"
 elif [ $# -eq 2 ]; then
-    TIME="$1"
+    MINUTES="$1"
     MESSAGE="$2"
 fi
 
-if ! echo $TIME | egrep -q '^[[:digit:]]+$'; then
+if ! echo $MINUTES | egrep -q '^[[:digit:]]+$'; then
     usage
 fi
 
-/sbin/shutdown -fr "+${TIME}" "$MESSAGE"
+# If an atd job is scheduled with timing arguments of `now +1 minutes', 
+# it feels like it executes at the next *turn of the minute*, which is 
+# almost certainly less than one real minute away.  Adding one `extra' 
+# minute will better match expectations.
+MINUTES=$(($MINUTES + 1))
 
-echo "Reboot pending.  Use \`shutdown -c' to abort."
+cat - >/etc/nologin <<EOF
+A reboot of this system has been scheduled.
+
+Please try again in five minutes.
+EOF
+
+echo "$MESSAGE" | wall
+
+# Do not use shutdown with a large time delay as that would block this 
+# program for minutes at a time.  Behaviour like that would grow tiring 
+# if you were tingling from Func or MCollective.
+job=$(echo "/sbin/shutdown -fr now" | \
+  at now +${MINUTES} minutes 2>&1 | \
+  awk '/^job/ { print $2; }')
+
+debug "Reboot pending.  \`atrm ${job}' to abort."
 
 # vim:et:sts=4:sw=4:
