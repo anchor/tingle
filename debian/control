@@ -9,4 +9,4 @@ Homepage: https://github.com/saj/tingle
 Package: tingle
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, facter
-Description: A uniform package updater for system administrators
+Description: A uniform package updater for systems administrators

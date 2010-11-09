@@ -33,7 +33,7 @@ instance, a site's configuration management system could distribute a
 tingle hook to have a host temporarily check itself out of the site's 
 availability monitoring system before rebooting.
 
-System administrators plan maintenance (at least in part) in terms of 
+Systems administrators plan maintenance (at least in part) in terms of 
 the most drastic action they expect to perform.  The action supplied to 
 tingle acts as a brake:  a means of limiting the automaton's reach.  
 Supported actions include:
