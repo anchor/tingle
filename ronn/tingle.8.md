@@ -18,8 +18,8 @@ tingle was designed to take aggressive charge over an environment
 scaling many hundreds of heterogeneous systems, where the risk and cost 
 of a single compromised system exceeded the likelihood and cost of a 
 faulty update (regression).  Carefully orchestrated autonomous operation 
-is possible with the aid of tools like [Func][] or [The Marionette 
-Collective][].
+is possible with the aid of tools like Func or The Marionette 
+Collective.
 
 If precise change management is a staple of your environment, ensure 
 your local package repositories contain only those updates you are 
