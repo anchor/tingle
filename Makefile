@@ -57,7 +57,7 @@ tingle-$(RELEASE).tar.gz: $(SOURCES)
 	@if tar --help | tail -n 1 | grep -q bsdtar ; then \
 		tar -cz -f $@ -s ',^,tingle-$(RELEASE)/,' $(SOURCES) ; \
 	else \
-		tar -cz -f $@ --replace '/^/tingle-$(RELEASE)\//' $(SOURCES) ; \
+		tar -cz -f $@ --replace ',^,tingle-$(RELEASE)/,' $(SOURCES) ; \
 	fi
 
 .PHONY: all doc install tarball
