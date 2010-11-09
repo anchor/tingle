@@ -1,4 +1,19 @@
+RELEASE ?= $(shell cat RELEASE)
+SOURCES = $(filter-out %.swp,\
+  LICENCE \
+  Makefile \
+  README \
+  README.md \
+  RELEASE \
+  $(shell find etc -type d -or -type f) \
+  $(shell find lib -type f) \
+  $(shell find sbin -type f) \
+  $(shell find share -type f))
+
 all: doc
+
+clean:
+	rm -f tingle-$(RELEASE).tar.gz
 
 doc: share/man/man8/reboot-politely.8 \
   share/man/man8/tingle.8 \
@@ -36,4 +51,9 @@ share/man/man8/tingle-warm-cache.8: ronn/tingle-warm-cache.8.md
 	ronn --pipe --roff ronn/tingle-warm-cache.8.md > \
 	  share/man/man8/tingle-warm-cache.8
 
-.PHONY: all doc install
+tarball: tingle-$(RELEASE).tar.gz
+
+tingle-$(RELEASE).tar.gz: $(SOURCES)
+	tar -czf $@ $(SOURCES)
+
+.PHONY: all doc install tarball
