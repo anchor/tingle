@@ -7,6 +7,7 @@ SOURCES = $(filter-out %.swp,\
   RELEASE \
   $(shell find etc -type d -or -type f) \
   $(shell find lib -type f) \
+  $(shell find ronn -type f) \
   $(shell find sbin -type f) \
   $(shell find share -type f))
 
