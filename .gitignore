@@ -5,3 +5,4 @@ debian/files
 debian/tingle
 debian/tingle.debhelper.log
 tingle-*.tar.gz
+tingle-*.rpm
