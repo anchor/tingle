@@ -31,4 +31,4 @@ Saj Goonatilleke <sg@redu.cx>
 ## SEE ALSO
 
 tingle(8), tingle-apply-updates(8), tingle-check-updates(8), 
-tingle-warm-cache(8), apt-get(8), yum(8)
+tingle-reboot(8), tingle-warm-cache(8), apt-get(8), yum(8)

@@ -45,11 +45,15 @@ Supported actions include:
   Apply outstanding package updates.  See tingle-apply-updates(8).
 
 * `reboot`:
-  Reboot the system.  See reboot-politely(8).
+  Reboot the system.  See tingle-reboot(8).
 
 Later actions will automatically invoke preceding actions.  For 
 instance, `tingle apply` will first check for pending updates and warm 
 the package cache before applying outstanding updates.
+
+`warm`, `apply`, and `reboot` will all act as no-ops if there are no 
+pending updates to apply.  `tingle reboot` will only reboot the system 
+if necessary.
 
 ## ERROR REPORTING
 
@@ -84,5 +88,5 @@ Saj Goonatilleke <sg@redu.cx>
 
 ## SEE ALSO
 
-tingle-apply-updates(8), tingle-check-updates(8), tingle-warm-cache(8), 
-reboot-politely(8), apt-get(8), yum(8)
+tingle-apply-updates(8), tingle-check-updates(8), tingle-reboot(8), 
+tingle-warm-cache(8), reboot-politely(8), apt-get(8), yum(8)
