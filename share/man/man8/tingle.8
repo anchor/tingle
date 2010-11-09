@@ -38,10 +38,13 @@ Apply outstanding package updates\. See tingle\-apply\-updates(8)\.
 .
 .TP
 \fBreboot\fR
-Reboot the system\. See reboot\-politely(8)\.
+Reboot the system\. See tingle\-reboot(8)\.
 .
 .P
 Later actions will automatically invoke preceding actions\. For instance, \fBtingle apply\fR will first check for pending updates and warm the package cache before applying outstanding updates\.
+.
+.P
+\fBwarm\fR, \fBapply\fR, and \fBreboot\fR will all act as no\-ops if there are no pending updates to apply\. \fBtingle reboot\fR will only reboot the system if necessary\.
 .
 .SH "ERROR REPORTING"
 When started interactively at the shell, tingle will pass all standard error output from its children (apt\-get, yum, and so on) through to the terminal\. This mode of operation is designed primarily for problem diagnosis\.
@@ -65,4 +68,4 @@ Non\-interactive mode may be forced by setting TINGLE_NONINTERACTIVE\.
 Saj Goonatilleke \fIsg@redu\.cx\fR
 .
 .SH "SEE ALSO"
-tingle\-apply\-updates(8), tingle\-check\-updates(8), tingle\-warm\-cache(8), reboot\-politely(8), apt\-get(8), yum(8)
+tingle\-apply\-updates(8), tingle\-check\-updates(8), tingle\-reboot(8), tingle\-warm\-cache(8), reboot\-politely(8), apt\-get(8), yum(8)
