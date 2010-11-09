@@ -29,6 +29,15 @@ appropriate:
 Execution order will correspond to the lexical sort order of script 
 file names.  Hook script failures are ignored.
 
+## RETURN VALUES
+
+Returns non-zero if something broke.  Run interactively for full 
+standard error output.
+
+## ENVIRONMENT
+
+Non-interactive mode may be forced by setting TINGLE_NONINTERACTIVE.
+
 ## AUTHOR
 
 Saj Goonatilleke <sg@redu.cx>

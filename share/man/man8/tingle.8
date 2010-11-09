@@ -13,7 +13,7 @@
 tingle acts as a thin frontend to your operating system\'s native package manager\. Unlike native tools, the tingle program serves only a single purpose: to keep all installed software packages up to date with respect to your repository mirrors\. It does this whilst presenting a simple interface, consistent across all recognised operating systems, and is usable by human and machine operators alike\.
 .
 .P
-tingle was designed to take aggressive charge over an environment scaling many hundreds of heterogeneous systems\. Carefully orchestrated autonomous operation is possible with the aid of tools like Func or The Marionette Collective\. tingle excels in environments where the risk and cost of a single compromised system exceeds the likelihood and cost of a faulty update (regression)\.
+tingle was designed to take aggressive charge over an environment scaling many hundreds of heterogeneous systems, where the risk and cost of a single compromised system exceeded the likelihood and cost of a faulty update (regression)\. Carefully orchestrated autonomous operation is possible with the aid of tools like [Func][] or [The Marionette Collective][]\.
 .
 .P
 If precise change management is a staple of your environment, ensure your local package repositories contain only those updates you are prepared to propagate\. Alternatively, exercise thorough use of your native package manager\'s pinning capabilities\. tingle will gobble down whatever you leave in the open\.
@@ -22,6 +22,9 @@ If precise change management is a staple of your environment, ensure your local 
 Site or host\-specific maintenance procedures can be condensed into tingle hook scripts and executed between the actions listed below\. For instance, a site\'s configuration management system could distribute a tingle hook to have a host temporarily check itself out of the site\'s availability monitoring system before rebooting\.
 .
 .P
+System administrators plan maintenance (at least in part) in terms of the most drastic action they expect to perform\. The action supplied to tingle acts as a brake: a means of limiting the automaton\'s reach\.
+.
+.br
 Supported actions include:
 .
 .TP
@@ -30,18 +33,15 @@ Check for pending updates\. See tingle\-check\-updates(8)\.
 .
 .TP
 \fBwarm\fR
-Refresh the local package cache\. See tingle\-warm\-cache(8)\.
+Refresh the local package cache if updates are pending\. See tingle\-warm\-cache(8)\.
 .
 .TP
 \fBapply\fR
-Apply outstanding package updates\. See tingle\-apply\-updates(8)\.
+Warm the local package cache and apply outstanding package updates if updates are pending\. See tingle\-apply\-updates(8)\.
 .
 .TP
 \fBreboot\fR
-Reboot the system\. See tingle\-reboot(8)\.
-.
-.P
-Later actions will automatically invoke preceding actions\. For instance, \fBtingle apply\fR will first check for pending updates and warm the package cache before applying outstanding updates\.
+Warm the local package cache, apply outstanding package updates, and reboot the system if updates are pending\. See tingle\-reboot(8)\.
 .
 .P
 \fBwarm\fR, \fBapply\fR, and \fBreboot\fR will all act as no\-ops if there are no pending updates to apply\. \fBtingle reboot\fR will only reboot the system if necessary\.

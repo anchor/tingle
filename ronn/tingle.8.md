@@ -33,23 +33,25 @@ instance, a site's configuration management system could distribute a
 tingle hook to have a host temporarily check itself out of the site's 
 availability monitoring system before rebooting.
 
+System administrators plan maintenance (at least in part) in terms of 
+the most drastic action they expect to perform.  The action supplied to 
+tingle acts as a brake:  a means of limiting the automaton's reach.  
 Supported actions include:
 
 * `check`:
   Check for pending updates.  See tingle-check-updates(8).
 
 * `warm`:
-  Refresh the local package cache.  See tingle-warm-cache(8).
+  Refresh the local package cache if updates are pending.  See 
+  tingle-warm-cache(8).
 
 * `apply`:
-  Apply outstanding package updates.  See tingle-apply-updates(8).
+  Warm the local package cache and apply outstanding package updates if 
+  updates are pending.  See tingle-apply-updates(8).
 
 * `reboot`:
-  Reboot the system.  See tingle-reboot(8).
-
-Later actions will automatically invoke preceding actions.  For 
-instance, `tingle apply` will first check for pending updates and warm 
-the package cache before applying outstanding updates.
+  Warm the local package cache, apply outstanding package updates, and 
+  reboot the system if updates are pending.  See tingle-reboot(8).
 
 `warm`, `apply`, and `reboot` will all act as no-ops if there are no 
 pending updates to apply.  `tingle reboot` will only reboot the system 

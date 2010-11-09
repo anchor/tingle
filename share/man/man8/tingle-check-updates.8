@@ -13,7 +13,13 @@ Part of the tingle(8) suite\.
 \fBtingle\fR \fBcheck\fR
 .
 .SH "DESCRIPTION"
-Returns non\-zero if the system has updates pending; otherwise, returns zero if the system is up to date\.
+check\-updates may be used non\-interactively to determine whether or not a system is up to date\. This determination is always carried out with respect to your repository mirrors (apt or yum sources)\.
+.
+.P
+When run interactively, check\-updates will output a sorted list of pending updates to standard output using this format (fields separated with a single space):
+.
+.P
+\fB<PACKAGE NAME>\fR \fB<PENDING VERSION>\fR
 .
 .P
 The following hook scripts, if they exist, will be executed when appropriate:
@@ -28,6 +34,12 @@ The following hook scripts, if they exist, will be executed when appropriate:
 .
 .P
 Execution order will correspond to the lexical sort order of script file names\. Hook script failures are ignored\.
+.
+.SH "RETURN VALUES"
+Returns non\-zero if the system has updates pending; otherwise, returns zero if the system is up to date\.
+.
+.SH "ENVIRONMENT"
+Non\-interactive mode may be forced by setting TINGLE_NONINTERACTIVE\.
 .
 .SH "AUTHOR"
 Saj Goonatilleke \fIsg@redu\.cx\fR

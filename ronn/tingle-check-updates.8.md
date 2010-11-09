@@ -9,8 +9,15 @@ Part of the tingle(8) suite.
 
 ## DESCRIPTION
 
-Returns non-zero if the system has updates pending; otherwise, returns 
-zero if the system is up to date.
+check-updates may be used non-interactively to determine whether or not 
+a system is up to date.  This determination is always carried out with 
+respect to your repository mirrors (apt or yum sources).
+
+When run interactively, check-updates will output a sorted list of 
+pending updates to standard output using this format (fields separated 
+with a single space):
+
+`<PACKAGE NAME>` `<PENDING VERSION>`
 
 The following hook scripts, if they exist, will be executed when 
 appropriate:
@@ -20,6 +27,15 @@ appropriate:
 
 Execution order will correspond to the lexical sort order of script 
 file names.  Hook script failures are ignored.
+
+## RETURN VALUES
+
+Returns non-zero if the system has updates pending; otherwise, returns 
+zero if the system is up to date.
+
+## ENVIRONMENT
+
+Non-interactive mode may be forced by setting TINGLE_NONINTERACTIVE.
 
 ## AUTHOR
 

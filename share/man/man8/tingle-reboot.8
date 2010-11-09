@@ -35,6 +35,12 @@ The following hook scripts, if they exist, will be executed when appropriate:
 .P
 Execution order will correspond to the lexical sort order of script file names\. Hook script failures are ignored\.
 .
+.SH "RETURN VALUES"
+Returns non\-zero if something broke\. Run interactively for full standard error output\.
+.
+.SH "ENVIRONMENT"
+Non\-interactive mode may be forced by setting TINGLE_NONINTERACTIVE\.
+.
 .SH "AUTHOR"
 Saj Goonatilleke \fIsg@redu\.cx\fR
 .
