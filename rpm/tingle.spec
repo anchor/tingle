@@ -9,6 +9,7 @@ URL:            https://github.com/saj/tingle
 Source0:        https://github.com/downloads/saj/tingle/tingle-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
+BuildArch:		noarch
 Requires:       facter
 
 # x64 anti-hack
