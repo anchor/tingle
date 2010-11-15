@@ -13,8 +13,13 @@ EOF
 
 execd /etc/tingle/hooks/pre-check.d
 
-invoke_os_flavour "check-updates"
+rv=0
+if ! invoke_os_flavour "check-updates" ; then
+    rv=1
+fi
 
 execd /etc/tingle/hooks/post-check.d
+
+exit $rv
 
 # vim:et:sts=4:sw=4:
