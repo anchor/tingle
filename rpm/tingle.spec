@@ -1,6 +1,6 @@
 Name:           tingle
 Version:        0.1.0
-Release:        1{?dist}
+Release:        1.0anchor2%{?dist}
 Summary:        A uniform package updater for systems administrators
 
 Group:          Applications/System
@@ -46,8 +46,12 @@ rm -rf %{buildroot}
 %{_sbindir}/reboot-politely
 %{_sbindir}/tingle
 %{_libdir}/tingle/*
+%{_sysconfdir}/tingle
 
 
 %changelog
+* Mon Nov 15 2010 Saj Goonatilleke <sg@redu.cx> - 0.1.0-2
+- Package /etc
+
 * Tue Nov 09 2010 Saj Goonatilleke <sg@redu.cx> - 0.1.0-1
 - Initial release
