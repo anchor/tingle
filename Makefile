@@ -1,15 +1,14 @@
 RELEASE ?= $(shell cat RELEASE)
-SOURCES = $(filter-out %.swp,\
-  LICENCE \
+SOURCES = LICENCE \
   Makefile \
   README \
   README.md \
   RELEASE \
-  $(shell find etc -type d -or -type f) \
+  etc \
   $(shell find lib -type f) \
   $(shell find ronn -type f) \
   $(shell find sbin -type f) \
-  $(shell find share -type f))
+  $(shell find share -type f)
 
 all: doc
 
@@ -56,9 +55,11 @@ tarball: tingle-$(RELEASE).tar.gz
 
 tingle-$(RELEASE).tar.gz: $(SOURCES)
 	@if tar --help | tail -n 1 | grep -q bsdtar ; then \
-		tar -cz -f $@ -s ',^,tingle-$(RELEASE)/,' $(SOURCES) ; \
+		tar --exclude '.*.swp' --exclude '.gitignore' \
+		  -cz -f $@ -s ',^,tingle-$(RELEASE)/,' $(SOURCES) ; \
 	else \
-		tar -cz -f $@ --replace ',^,tingle-$(RELEASE)/,' $(SOURCES) ; \
+		tar --exclude '.*.swp' --exclude '.gitignore' \
+		  -cz -f $@ --replace ',^,tingle-$(RELEASE)/,' $(SOURCES) ; \
 	fi
 
 .PHONY: all doc install tarball
