@@ -1,6 +1,6 @@
 Name:           tingle
 Version:        0.1.0
-Release:        1.0anchor2%{?dist}
+Release:        2%{?dist}
 Summary:        A uniform package updater for systems administrators
 
 Group:          Applications/System
@@ -9,7 +9,7 @@ URL:            https://github.com/saj/tingle
 Source0:        https://github.com/downloads/saj/tingle/tingle-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-BuildArch:		noarch
+BuildArch:      noarch
 Requires:       facter
 
 # x64 anti-hack
