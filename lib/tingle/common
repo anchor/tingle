@@ -53,10 +53,25 @@ check_free_capacity() {
     done
 }
 
-do_or_die() {
+# For children that return nonzero without actually failing.
+do_ignore_derp() {
     exec 1>/dev/null
 
     # Hide the nuts-and-bots when running non-interactively.
+    if ! is_interactive ; then
+        exec 2>&1
+        RUN_INTER="  Run interactively for verbose output."
+    fi
+
+    $@ || true
+
+    exec 1>&3
+    exec 2>&4
+}
+
+do_or_die() {
+    exec 1>/dev/null
+
     if ! is_interactive ; then
         exec 2>&1
         RUN_INTER="  Run interactively for verbose output."
