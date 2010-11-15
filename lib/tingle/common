@@ -117,8 +117,7 @@ execd() {
 invoke_os_flavour() {
     BASE="$1"
 
-    OS="$(/usr/bin/facter operatingsystem 2>/dev/null)"
-    case "$OS" in
+    case "$(os_flavour)" in
         CentOS|RedHat)
             SUFFIX="rpm"
         ;;
@@ -143,6 +142,10 @@ is_interactive() {
     stty >/dev/null && test "${TINGLE_NONINTERACTIVE:+x}" != x && \
       return 0
     return 1
+}
+
+os_flavour() {
+    /usr/bin/facter operatingsystem 2>/dev/null
 }
 
 # All potentially disastrous automated processes need a killswitch 
