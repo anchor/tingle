@@ -26,7 +26,7 @@ fi
 /usr/bin/apt-get -qqs dist-upgrade | \
   perl -nle 'if (/^Inst ([\w\.-]+)( \[[\w\.+-]+\])? \(([\w\.:+-]+)/) {
       print "$1 $3";
-  }' \
+  }' | \
   grep -v -f $UNIMPORTANT | \
   sort >$TMP
 cat $TMP
