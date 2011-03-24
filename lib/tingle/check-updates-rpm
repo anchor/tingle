@@ -20,12 +20,17 @@ TMP=$(mktemp tingle)
 if ! is_interactive ; then
     exec 2>/dev/null
 fi
+if [ ! -f $UNIMPORTANT ]; then
+    touch $UNIMPORTANT
+fi
 /usr/bin/yum -q check-update | \
   awk '/^[[:alnum:]]/ {
       name=$1;
       version=$2;
       print name " " version;
-  }' | sort >$TMP
+  }' | \
+  grep -v -f $UNIMPORTANT | \
+  sort >$TMP
 cat $TMP
 if [ $(cat $TMP | wc -l) -gt 0 ]; then
     rm -f $TMP

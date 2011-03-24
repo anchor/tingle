@@ -28,6 +28,17 @@ appropriate:
 Execution order will correspond to the lexical sort order of script 
 file names.  Hook script failures are ignored.
 
+List packages, one per line, in `/etc/tingle/unimportant-packages` to 
+have them ignored by check-updates.  Each line will be interpreted as a 
+POSIX BRE.  Unimportant packages will not be written to standard output 
+by check-updates.  The list of unimportant packages is *not* a list of 
+packages to ignore.  Updates to unimportant packages are ignored so long 
+as the only pending updates to the system are to unimportant packages.  
+As soon as an update to a -- retrospectively named -- important package 
+is available, all pending updates (important or otherwise) will be 
+applied.  This mechanism is designed to prevent unwarranted reboots for 
+trivial package updates.
+
 ## RETURN VALUES
 
 Returns non-zero if the system has updates pending; otherwise, returns 

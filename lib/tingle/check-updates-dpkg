@@ -20,13 +20,18 @@ TMP=$(mktemp tingle)
 if ! is_interactive ; then
     exec 2>/dev/null
 fi
+if [ ! -f $UNIMPORTANT ]; then
+    touch $UNIMPORTANT
+fi
 /usr/bin/apt-get -qqs dist-upgrade | \
   awk '/^Inst/ {
       name=$2;
       version=$3;
       gsub("[\[\]]", "", version);
       print name " " version;
-  }' | sort >$TMP
+  }' | \
+  grep -v -f $UNIMPORTANT | \
+  sort >$TMP
 cat $TMP
 if [ $(cat $TMP | wc -l) -gt 0 ]; then
     rm -f $TMP
