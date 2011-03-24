@@ -24,6 +24,7 @@ doc: share/man/man8/reboot-politely.8 \
 
 install:
 	install -d $(DESTDIR)/{etc/tingle/hooks/{pre,post}-{apply,check,reboot,warm}.d,usr/lib/tingle,usr/sbin}
+	install -m0444 etc/tingle/unimportant-packages $(DESTDIR)/etc/tingle/unimportant-packages
 	install -m0555 etc/tingle/hooks/post-apply.d/* $(DESTDIR)/etc/tingle/hooks/post-apply.d/
 	install -m0555 lib/tingle/* $(DESTDIR)/usr/lib/tingle/
 	install -m0555 sbin/* $(DESTDIR)/usr/sbin/
