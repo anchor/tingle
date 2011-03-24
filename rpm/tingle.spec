@@ -52,7 +52,7 @@ rm -rf %{buildroot}
 
 
 %changelog
-* Fri Mar 25 2010 Saj Goonatilleke <sg@redu.cx> - 0.1.1-1
+* Fri Mar 25 2011 Saj Goonatilleke <sg@redu.cx> - 0.1.1-1
 - Sync with upstream
 
 * Mon Nov 15 2010 Saj Goonatilleke <sg@redu.cx> - 0.1.0-2
