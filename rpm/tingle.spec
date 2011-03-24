@@ -47,7 +47,8 @@ rm -rf %{buildroot}
 %{_sbindir}/reboot-politely
 %{_sbindir}/tingle
 %{_libdir}/tingle/*
-%{_sysconfdir}/tingle
+%dir %{_sysconfdir}/tingle
+%config %{_sysconfdir}/tingle/hooks/post-apply.d/remove-old-kernels
 
 
 %changelog
