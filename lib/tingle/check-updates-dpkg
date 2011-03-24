@@ -24,12 +24,9 @@ if [ ! -f $UNIMPORTANT ]; then
     touch $UNIMPORTANT
 fi
 /usr/bin/apt-get -qqs dist-upgrade | \
-  awk '/^Inst/ {
-      name=$2;
-      version=$3;
-      gsub("[\[\]]", "", version);
-      print name " " version;
-  }' | \
+  perl -nle 'if (/^Inst ([\w\.-]+)( \[[\w\.+-]+\])? \(([\w\.:+-]+)/) {
+      print "$1 $3";
+  }' \
   grep -v -f $UNIMPORTANT | \
   sort >$TMP
 cat $TMP
