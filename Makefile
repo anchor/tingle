@@ -4,7 +4,10 @@ SOURCES = LICENCE \
   README \
   README.md \
   RELEASE \
-  etc \
+  $(shell find etc -type f) \
+  $(shell find etc/tingle/hooks -type f | \
+    perl -nle 'use File::Basename; print dirname $$_ if -f $$_;' | \
+	sort | uniq -c | awk '{ if ($$1 == "1") print $$2; }') \
   $(shell find lib -type f) \
   $(shell find ronn -type f) \
   $(shell find sbin -type f) \
