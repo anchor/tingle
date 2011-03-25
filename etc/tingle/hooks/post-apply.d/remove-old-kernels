@@ -6,7 +6,7 @@ set -e
 
 case "$(os_flavour)" in
 	CentOS|RedHat)
-		do_or_die /usr/bin/package-cleanup --oldkernels --count 2
+		do_or_die /usr/bin/package-cleanup --oldkernels --count 2 -y
 	;;
 esac
 
