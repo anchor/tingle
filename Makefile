@@ -18,6 +18,8 @@ all: doc
 clean:
 	rm -f tingle-$(RELEASE).tar.gz
 
+dist: tingle-$(RELEASE).tar.gz
+
 doc: share/man/man8/reboot-politely.8 \
   share/man/man8/tingle.8 \
   share/man/man8/tingle-apply-updates.8 \
@@ -55,8 +57,6 @@ share/man/man8/tingle-reboot.8: ronn/tingle-reboot.8.md
 share/man/man8/tingle-warm-cache.8: ronn/tingle-warm-cache.8.md
 	ronn --pipe --roff ronn/tingle-warm-cache.8.md > \
 	  share/man/man8/tingle-warm-cache.8
-
-tarball: tingle-$(RELEASE).tar.gz
 
 tingle-$(RELEASE).tar.gz: $(SOURCES)
 	@if tar --help | tail -n 1 | grep -q bsdtar ; then \
