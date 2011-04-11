@@ -1,5 +1,5 @@
 Name:           tingle
-Version:        0.1.1
+Version:        0.1.2
 Release:        1%{?dist}
 Summary:        A uniform package updater for systems administrators
 
@@ -47,11 +47,17 @@ rm -rf %{buildroot}
 %{_sbindir}/reboot-politely
 %{_sbindir}/tingle
 %{_libdir}/tingle/*
+%{_usr}/share/man/man8/*
 %dir %{_sysconfdir}/tingle
 %config %{_sysconfdir}/tingle/hooks/post-apply.d/remove-old-kernels
+%config %{_sysconfdir}/tingle/unimportant-packages
 
 
 %changelog
+* Mon Apr 11 2011 Saj Goonatilleke <sg@redu.cx> - 0.1.2-1
+- Sync with upstream
+- Package man pages
+
 * Fri Mar 25 2011 Saj Goonatilleke <sg@redu.cx> - 0.1.1-1
 - Sync with upstream
 
