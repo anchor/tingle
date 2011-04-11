@@ -27,12 +27,13 @@ doc: share/man/man8/reboot-politely.8 \
   share/man/man8/tingle-reboot.8 \
   share/man/man8/tingle-warm-cache.8
 
-install:
+install: doc
 	install -d $(DESTDIR)/{etc/tingle/hooks/{pre,post}-{apply,check,reboot,warm}.d,usr/lib/tingle,usr/sbin}
 	install -m0444 etc/tingle/unimportant-packages $(DESTDIR)/etc/tingle/unimportant-packages
 	install -m0555 etc/tingle/hooks/post-apply.d/* $(DESTDIR)/etc/tingle/hooks/post-apply.d/
 	install -m0555 lib/tingle/* $(DESTDIR)/usr/lib/tingle/
 	install -m0555 sbin/* $(DESTDIR)/usr/sbin/
+	install -m0444 share/man/man8/* $(DESTDIR)/usr/share/man/man8/
 
 share/man/man8/reboot-politely.8: ronn/reboot-politely.8.md
 	ronn --pipe --roff ronn/reboot-politely.8.md > \
