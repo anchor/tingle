@@ -141,7 +141,7 @@ invoke_os_flavour() {
 }
 
 is_interactive() {
-    stty >/dev/null && test "${TINGLE_NONINTERACTIVE:+x}" != x && \
+    tty -s && test "${TINGLE_NONINTERACTIVE:+x}" != x && \
       return 0
     return 1
 }
