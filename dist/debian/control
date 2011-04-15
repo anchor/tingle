@@ -7,7 +7,7 @@ Standards-Version: 3.7.3
 Homepage: https://github.com/saj/tingle
 
 Package: tingle
-Architecture: any
+Architecture: all
 Depends: ${shlibs:Depends}, ${misc:Depends}, facter
 Description: A uniform package updater for systems administrators
  .
