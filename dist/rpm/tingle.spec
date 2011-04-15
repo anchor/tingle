@@ -1,6 +1,6 @@
 Name:           tingle
 Version:        0.1.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A uniform package updater for systems administrators
 
 Group:          Applications/System
@@ -49,11 +49,16 @@ rm -rf %{buildroot}
 %{_libdir}/tingle/*
 %{_usr}/share/man/man8/*
 %dir %{_sysconfdir}/tingle
+%dir %{_sysconfdir}/tingle/hooks/*
 %config %{_sysconfdir}/tingle/hooks/post-apply.d/remove-old-kernels
 %config %{_sysconfdir}/tingle/unimportant-packages
 
 
 %changelog
+* Fri Apr 15 2011 Saj Goonatilleke <sg@redu.cx> - 0.1.3-2
+- Package empty hook script directories to avoid (correct) runtime 
+  warnings
+
 * Fri Apr 15 2011 Saj Goonatilleke <sg@redu.cx> - 0.1.3-1
 - Sync with upstream
 
