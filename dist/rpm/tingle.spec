@@ -1,6 +1,6 @@
 Name:           tingle
-Version:        0.1.3
-Release:        2%{?dist}
+Version:        0.1.4
+Release:        1%{?dist}
 Summary:        A uniform package updater for systems administrators
 
 Group:          Applications/System
@@ -55,6 +55,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Thu Apr 21 2011 Saj Goonatilleke <sg@redu.cx> - 0.1.4-1
+- New upstream release.
+
 * Fri Apr 15 2011 Saj Goonatilleke <sg@redu.cx> - 0.1.3-2
 - Package empty hook script directories to avoid (correct) runtime 
   warnings
