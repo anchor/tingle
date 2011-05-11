@@ -1,5 +1,5 @@
 Name:           tingle
-Version:        0.1.4
+Version:        0.1.5
 Release:        1%{?dist}
 Summary:        A uniform package updater for systems administrators
 
@@ -55,6 +55,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Wed May 11 2011 Saj Goonatilleke <sg@redu.cx> - 0.1.5-1
+- New upstream release.
+
 * Thu Apr 21 2011 Saj Goonatilleke <sg@redu.cx> - 0.1.4-1
 - New upstream release.
 

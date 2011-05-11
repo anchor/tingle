@@ -42,6 +42,7 @@ availability monitoring system before rebooting.
 - CentOS and Red Hat Enterprise Linux 4 (*Nahant*)
 - CentOS and Red Hat Enterprise Linux 5 (*Tikanga*)
 - Debian 5 (*Lenny*)
+- Debian 6 (*Squeeze*)
 
 
 ## Installation requirements
