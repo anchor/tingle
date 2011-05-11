@@ -1,8 +1,6 @@
 *.deb
 build-stamp
 configure-stamp
-debian/files
-debian/tingle
-debian/tingle.debhelper.log
-tingle-*.tar.gz
+debian/
 tingle-*.rpm
+tingle-*.tar.gz
