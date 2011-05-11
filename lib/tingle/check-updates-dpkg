@@ -15,7 +15,7 @@ export DEBIAN_FRONTEND=noninteractive
 
 do_or_die /usr/bin/apt-get update
 
-TMP=$(mktemp tingle)
+TMP=$(mktemp tingle.XXXXXX)
 
 if ! is_interactive ; then
     exec 1>/dev/null

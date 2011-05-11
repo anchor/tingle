@@ -15,7 +15,7 @@ do_or_die /usr/bin/yum clean headers
 do_or_die /usr/bin/yum clean dbcache
 do_or_die /usr/bin/yum clean metadata
 
-TMP=$(mktemp tingle)
+TMP=$(mktemp tingle.XXXXXX)
 
 if ! is_interactive ; then
     exec 1>/dev/null
