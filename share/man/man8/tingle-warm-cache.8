@@ -1,7 +1,7 @@
 .\" generated with Ronn/v0.7.3
 .\" http://github.com/rtomayko/ronn/tree/0.7.3
 .
-.TH "TINGLE\-WARM\-CACHE" "8" "November 2010" "" ""
+.TH "TINGLE\-WARM\-CACHE" "8" "June 2011" "" ""
 .
 .SH "NAME"
 \fBtingle\-warm\-cache\fR \- downloads (but does not apply) pending updates
@@ -30,7 +30,7 @@ The following hook scripts, if they exist, will be executed when appropriate:
 .IP "" 0
 .
 .P
-Execution order will correspond to the lexical sort order of script file names\. Hook script failures are ignored\.
+Execution order will correspond to the lexical sort order of script file names\. The first hook script failure will trigger an immediate abort\.
 .
 .SH "RETURN VALUES"
 Returns non\-zero if something broke\. Run interactively for full standard error output\.

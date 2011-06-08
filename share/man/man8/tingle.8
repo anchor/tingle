@@ -1,7 +1,7 @@
 .\" generated with Ronn/v0.7.3
 .\" http://github.com/rtomayko/ronn/tree/0.7.3
 .
-.TH "TINGLE" "8" "November 2010" "" ""
+.TH "TINGLE" "8" "June 2011" "" ""
 .
 .SH "NAME"
 \fBtingle\fR \- (n): a thin patch
@@ -19,7 +19,7 @@ tingle was designed to take aggressive charge over an environment scaling many h
 If precise change management is a staple of your environment, ensure your local package repositories contain only those updates you are prepared to propagate\. Alternatively, exercise thorough use of your native package manager\'s pinning capabilities\. tingle will gobble down whatever you leave in the open\.
 .
 .P
-Site or host\-specific maintenance procedures can be condensed into tingle hook scripts and executed between the actions listed below\. For instance, a site\'s configuration management system could distribute a tingle hook to have a host temporarily check itself out of the site\'s availability monitoring system before rebooting\.
+Site or host\-specific maintenance procedures can be condensed into tingle hook scripts and executed between the actions listed below\. Hook script failures (where a failure is signalled with a non\-zero exit status) will trigger an immediate abort\.
 .
 .P
 Systems administrators plan maintenance (at least in part) in terms of the most drastic action they expect to perform\. The action supplied to tingle acts as a brake: a means of limiting the automaton\'s reach\.

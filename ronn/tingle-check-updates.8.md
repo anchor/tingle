@@ -25,8 +25,8 @@ appropriate:
 - `/etc/tingle/hooks/pre-check.d/*`
 - `/etc/tingle/hooks/post-check.d/*`
 
-Execution order will correspond to the lexical sort order of script 
-file names.  Hook script failures are ignored.
+Execution order will correspond to the lexical sort order of script file 
+names.  The first hook script failure will trigger an immediate abort.
 
 List packages, one per line, in `/etc/tingle/unimportant-packages` to 
 have them ignored by check-updates.  Each line will be interpreted as a 

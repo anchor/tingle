@@ -28,10 +28,9 @@ native package manager's pinning capabilities.  tingle will gobble down
 whatever you leave in the open.
 
 Site or host-specific maintenance procedures can be condensed into 
-tingle hook scripts and executed between the actions listed below.  For 
-instance, a site's configuration management system could distribute a 
-tingle hook to have a host temporarily check itself out of the site's 
-availability monitoring system before rebooting.
+tingle hook scripts and executed between the actions listed below.  Hook 
+script failures (where a failure is signalled with a non-zero exit 
+status) will trigger an immediate abort.
 
 Systems administrators plan maintenance (at least in part) in terms of 
 the most drastic action they expect to perform.  The action supplied to 

@@ -109,10 +109,12 @@ execd() {
         warning "$d is not a valid hook scripts directory"
     else
         debug "Scanning $d for hook scripts"
-        for i in $(find ${d} -mindepth 1 -maxdepth 1 -type f); do
-            if [ -x $i ]; then
+        for i in $(find "${d}" -mindepth 1 -maxdepth 1 -type f); do
+            if [ -x "$i" ]; then
                 debug "Executing $i"
-                ( $i ) || true
+                if ! "$i" ; then
+                    error "\`$i' returned non-zero"
+                fi
             else
                 warning "$i is not executable"
             fi

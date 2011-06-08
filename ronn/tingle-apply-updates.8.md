@@ -26,8 +26,8 @@ appropriate:
 - `/etc/tingle/hooks/pre-apply.d/*`
 - `/etc/tingle/hooks/post-apply.d/*`
 
-Execution order will correspond to the lexical sort order of script 
-file names.  Hook script failures are ignored.
+Execution order will correspond to the lexical sort order of script file 
+names.  The first hook script failure will trigger an immediate abort.
 
 ## RETURN VALUES
 
