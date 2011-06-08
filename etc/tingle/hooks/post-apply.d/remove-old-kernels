@@ -9,5 +9,3 @@ case "$(os_flavour)" in
 		do_or_die /usr/bin/package-cleanup --oldkernels --count 2 -y
 	;;
 esac
-
-# vim:et:sts=4:sw=4:

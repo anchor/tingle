@@ -16,5 +16,3 @@ do_or_die /usr/bin/yum clean dbcache
 do_or_die /usr/bin/yum clean metadata
 
 do_ignore_derp /usr/bin/yum update -qy --downloadonly
-
-# vim:et:sts=4:sw=4:

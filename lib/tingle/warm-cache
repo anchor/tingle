@@ -19,5 +19,3 @@ execd /etc/tingle/hooks/pre-warm.d
 invoke_os_flavour "warm-cache"
 
 execd /etc/tingle/hooks/post-warm.d
-
-# vim:et:sts=4:sw=4:

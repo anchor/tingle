@@ -156,5 +156,3 @@ KILLSWITCH="${TINGLE_PREFIX}/etc/tingle/noupdate"
 if [ -f $KILLSWITCH ]; then
     abort "Aborting on killswitch.  Remove $KILLSWITCH and try again."
 fi
-
-# vim:et:sts=4:sw=4:

@@ -41,5 +41,3 @@ exec 1>&3
 exec 2>&4
 
 rm -f $TMP
-
-# vim:et:sts=4:sw=4:

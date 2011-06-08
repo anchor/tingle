@@ -16,5 +16,3 @@ export DEBIAN_FRONTEND=noninteractive
 do_or_die /usr/bin/apt-get update
 do_or_die /usr/bin/apt-get --download-only \
   -o APT::Get::Show-Upgraded=true -y dist-upgrade
-
-# vim:et:sts=4:sw=4:

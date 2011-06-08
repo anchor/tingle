@@ -50,5 +50,3 @@ case $action in
     *)
         usage
 esac
-
-# vim:et:sts=4:sw=4:

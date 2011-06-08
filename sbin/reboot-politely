@@ -55,5 +55,3 @@ job=$(echo "/sbin/shutdown -fr now" | \
   awk '/^job/ { print $2; }')
 
 debug "Reboot pending.  \`atrm ${job}' to abort."
-
-# vim:et:sts=4:sw=4:

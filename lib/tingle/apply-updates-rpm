@@ -12,5 +12,3 @@ EOF
 }
 
 do_or_die /usr/bin/yum update -y
-
-# vim:et:sts=4:sw=4:

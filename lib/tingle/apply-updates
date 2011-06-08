@@ -19,5 +19,3 @@ execd /etc/tingle/hooks/pre-apply.d
 invoke_os_flavour "apply-updates"
 
 execd /etc/tingle/hooks/post-apply.d
-
-# vim:et:sts=4:sw=4:

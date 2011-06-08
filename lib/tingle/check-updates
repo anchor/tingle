@@ -21,5 +21,3 @@ fi
 execd /etc/tingle/hooks/post-check.d
 
 exit $rv
-
-# vim:et:sts=4:sw=4:
