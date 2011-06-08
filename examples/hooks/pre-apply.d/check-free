@@ -1,0 +1,28 @@
+#!/bin/bash
+
+set -e
+
+# Check for 100 MB (a totally arbitrary figure) of free capacity on 
+# / and /tmp.  /tmp need not exist as a separate file system.
+df -P | gawk '
+  BEGIN {
+	  failed = "";
+  }
+  /^Filesystem/ {
+	  bs = $2;
+	  sub(/-blocks$/, "", bs);
+  }
+  /(\/|\/tmp)$/ {
+	  mount = $NF;
+	  avail = $4;
+	  free = int(avail * bs / 1024 / 1024);
+	  if (free < 100) {
+		  failed = failed mount " ";
+	  }
+  }
+  END {
+	  if (failed != "") {
+		  print "Less than 100 MB free on " failed > "/dev/stderr";
+		  exit 1;
+	  }
+  }'

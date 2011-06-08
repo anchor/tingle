@@ -11,9 +11,6 @@ EOF
     exit 2
 }
 
-# XXX: Move to hooks/req-action.d
-check_free_capacity
-
 # Your native package manager should be maintaining its own change log.  
 # A separate message here makes it easier to discern between updates 
 # applied by tingle and those that were applied some other way.

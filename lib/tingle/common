@@ -43,26 +43,6 @@ debug() {
     exec 2>&4
 }
 
-check_free_capacity() {
-    # Check for 100 MB (a totally arbitrary figure) of free capacity on 
-    # / and /tmp.  /tmp need not exist as a separate file system.
-    df -P | awk '/^Filesystem/ {
-          bs = $2;
-          sub(/-blocks$/, "", bs);
-      }
-      /(\/|\/tmp)$/ {
-          mount = $NF;
-          avail = $4;
-          free = int(avail * bs / 1024 / 1024);
-          print(free "\t" mount);
-      }' | while read dfinfo; do
-        dfa=($dfinfo)
-        if [ ${dfa[0]} -lt 100 ]; then
-            abort "Less than 100 MB free on ${dfa[1]}"
-        fi
-    done
-}
-
 # For children that return nonzero without actually failing.
 do_ignore_derp() {
     exec 1>/dev/null
