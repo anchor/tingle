@@ -3,6 +3,7 @@
 ABORTAG="[abort]"
 ERRTAG="[error]"
 WARNTAG="[warning]"
+SYSLOGTAG="tingle"
 
 export PATH=/sbin:/bin:/usr/sbin:/usr/bin
 
@@ -12,16 +13,23 @@ exec 3>&1
 exec 4>&2
 
 abort() {
+    # We could pass -s to logger and let it do the echo out to stderr, 
+    # but I don't want to pass ABORTAG and friends into syslog.  That's 
+    # what syslog priorities are for.
+
+    log_error "$@"
     echo "$ABORTAG $@" >&4
     exit 2
 }
 
 error() {
+    log_error "$@"
     echo "$ERRTAG $@" >&4
     exit 1
 }
 
 warning() {
+    log_warning "$@"
     debug "$WARNTAG $@"
 }
 
@@ -62,7 +70,6 @@ do_ignore_derp() {
     # Hide the nuts-and-bots when running non-interactively.
     if ! is_interactive ; then
         exec 2>&1
-        RUN_INTER="  Run interactively for verbose output."
     fi
 
     $@ || true
@@ -144,6 +151,18 @@ is_interactive() {
     tty -s && test "${TINGLE_NONINTERACTIVE:+x}" != x && \
       return 0
     return 1
+}
+
+log_error() {
+    logger -p user.err -t "$SYSLOGTAG" -- "$@" || true
+}
+
+log_info() {
+    logger -t "$SYSLOGTAG" -- "$@" || true
+}
+
+log_warning() {
+    logger -p user.warn -t "$SYSLOGTAG" -- "$@" || true
 }
 
 os_flavour() {
