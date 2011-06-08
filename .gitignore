@@ -1,6 +1,6 @@
 *.deb
+/debian/
 build-stamp
 configure-stamp
-debian/
 tingle-*.rpm
 tingle-*.tar.gz
