@@ -25,4 +25,5 @@ fi
 do_or_die /usr/bin/apt-get update
 
 do_or_die /usr/bin/apt-get -o APT::Get::Show-Upgraded=true \
+  -o Dpkg::Options::='--force-confold' \
   -y dist-upgrade
