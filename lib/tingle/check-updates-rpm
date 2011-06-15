@@ -25,10 +25,19 @@ if [ ! -f $UNIMPORTANT ]; then
     touch $UNIMPORTANT
 fi
 /usr/bin/yum -q check-update | \
-  awk '/^[[:alnum:]]/ {
-      name=$1;
-      version=$2;
-      print name " " version;
+  awk '
+  BEGIN {
+      obsoletes = 0;
+  }
+  /^Obsoleting Packages/ {
+      obsoletes = 1;
+  }
+  /^[[:alnum:]]/ {
+      if (obsoletes != 1) {
+          name=$1;
+          version=$2;
+          print name " " version;
+      }
   }' | \
   grep -v -f $UNIMPORTANT | \
   sort >$TMP
