@@ -75,9 +75,6 @@ do_or_die() {
 }
 
 execd() {
-    exec 3>&1
-    exec 4>&2
-
     if ! is_interactive ; then
         exec 1>/dev/null
         exec 2>&1
