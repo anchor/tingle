@@ -9,13 +9,13 @@ Part of the tingle(8) suite.
 
 ## DESCRIPTION
 
-check-updates may be used non-interactively to determine whether or not 
-a system is up to date.  This determination is always carried out with 
-respect to your repository mirrors (apt or yum sources).
+check-updates may be used to determine whether or not a system is up to 
+date.  This determination is always carried out with respect to your 
+repository mirrors (apt or yum sources).
 
-When run interactively, check-updates will output a sorted list of 
-pending updates to standard output using this format (fields separated 
-with a single space):
+Run interactively or non-interactively, check-updates will output a 
+sorted list of pending updates to standard output using the following 
+format (fields are separated with a single space):
 
 `<PACKAGE NAME>` `<PENDING VERSION>`
 

@@ -15,16 +15,12 @@ do_or_die /usr/bin/yum clean headers >/dev/null
 do_or_die /usr/bin/yum clean dbcache >/dev/null
 do_or_die /usr/bin/yum clean metadata >/dev/null
 
-TMP=$(mktemp tingle.XXXXXX)
+TMP=$(do_or_die mktemp tingle.XXXXXX)
 
-if ! is_interactive ; then
-    exec 1>/dev/null
-    exec 2>/dev/null
-fi
 if [ ! -f $UNIMPORTANT ]; then
-    touch $UNIMPORTANT
+    do_or_die touch $UNIMPORTANT
 fi
-/usr/bin/yum -q check-update | \
+do_or_die /usr/bin/yum -q check-update | \
   awk '
   BEGIN {
       obsoletes = 0;
@@ -46,7 +42,5 @@ if [ $(cat $TMP | wc -l) -gt 0 ]; then
     rm -f $TMP
     exit 1
 fi
-exec 1>&3
-exec 2>&4
 
 rm -f $TMP
