@@ -13,6 +13,6 @@ EOF
 
 export DEBIAN_FRONTEND=noninteractive
 
-do_or_die /usr/bin/apt-get update
+do_or_die /usr/bin/apt-get update >/dev/null
 do_or_die /usr/bin/apt-get --download-only \
-  -o APT::Get::Show-Upgraded=true -y dist-upgrade
+  -o APT::Get::Show-Upgraded=true -y dist-upgrade >/dev/null

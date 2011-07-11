@@ -13,7 +13,7 @@ EOF
 
 export DEBIAN_FRONTEND=noninteractive
 
-do_or_die /usr/bin/apt-get update
+do_or_die /usr/bin/apt-get update >/dev/null
 
 TMP=$(mktemp tingle.XXXXXX)
 

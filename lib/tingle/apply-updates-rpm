@@ -11,4 +11,4 @@ EOF
     exit 2
 }
 
-do_or_die /usr/bin/yum update -y
+do_or_die /usr/bin/yum update -y >/dev/null

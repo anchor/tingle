@@ -5,7 +5,8 @@ set -e
 . ${TINGLE_PREFIX:="/usr"}/lib/tingle/common
 
 case "$(os_flavour)" in
-	CentOS|RedHat)
-		do_or_die /usr/bin/package-cleanup --oldkernels --count 2 -y
-	;;
+    CentOS|RedHat)
+        do_or_die /usr/bin/package-cleanup --oldkernels --count 2 -y \
+          >/dev/null
+    ;;
 esac

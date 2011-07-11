@@ -11,9 +11,9 @@ EOF
     exit 2
 }
 
-do_or_die /usr/bin/yum clean headers
-do_or_die /usr/bin/yum clean dbcache
-do_or_die /usr/bin/yum clean metadata
+do_or_die /usr/bin/yum clean headers >/dev/null
+do_or_die /usr/bin/yum clean dbcache >/dev/null
+do_or_die /usr/bin/yum clean metadata >/dev/null
 
 TMP=$(mktemp tingle.XXXXXX)
 

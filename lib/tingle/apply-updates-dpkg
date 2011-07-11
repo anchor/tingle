@@ -22,8 +22,8 @@ if egrep -R '(experimental|(un)?stable|testing)' \
 "names (e.g.: stable) in your apt sources."
 fi
 
-do_or_die /usr/bin/apt-get update
+do_or_die /usr/bin/apt-get update >/dev/null
 
 do_or_die /usr/bin/apt-get -o APT::Get::Show-Upgraded=true \
   -o Dpkg::Options::='--force-confold' \
-  -y dist-upgrade
+  -y dist-upgrade >/dev/null
