@@ -15,4 +15,4 @@ do_or_die /usr/bin/yum clean headers >/dev/null
 do_or_die /usr/bin/yum clean dbcache >/dev/null
 do_or_die /usr/bin/yum clean metadata >/dev/null
 
-do_ignore_derp /usr/bin/yum update -qy --downloadonly >/dev/null
+do_ignore_derp /usr/bin/yum update -q -y --downloadonly >/dev/null
