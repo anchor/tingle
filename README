@@ -40,6 +40,7 @@ availability monitoring system before rebooting.
 ## Supported operating systems
 
 - CentOS and Red Hat Enterprise Linux 5 (*Tikanga*)
+- CentOS and Red Hat Enterprise Linux 6 (*Santiago*)
 - Debian 5 (*Lenny*)
 - Debian 6 (*Squeeze*)
 
