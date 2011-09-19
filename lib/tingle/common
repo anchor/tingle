@@ -139,7 +139,18 @@ log_warning() {
 }
 
 os_flavour() {
-    /usr/bin/facter operatingsystem 2>/dev/null
+    if [ -e /etc/redhat-release ]; then
+        if grep -qi centos /etc/redhat-release ; then
+            echo "CentOS"
+        elif grep -qi scientific /etc/redhat-release ; then
+            echo "Scientific"
+        else
+            echo "RedHat"
+        fi
+    elif [ -e /etc/debian_version ]; then
+        # You're one of those Ubuntu users, are ye?  See bug #19353.
+        echo "Debian"
+    fi
 }
 
 # All potentially disastrous automated processes need a killswitch 

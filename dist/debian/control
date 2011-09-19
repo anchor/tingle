@@ -8,7 +8,7 @@ Homepage: https://github.com/anchor/tingle
 
 Package: tingle
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, facter
+Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: A package updater for busy system administrators
  .
  tingle acts as a thin frontend to your operating system's native 

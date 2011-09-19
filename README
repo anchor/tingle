@@ -46,10 +46,7 @@ availability monitoring system before rebooting.
 
 ## Installation requirements
 
-* Puppet Labs' [Facter][]
 * yum-downloadonly (required only on CentOS and RHEL)
-
-[Facter]: http://www.puppetlabs.com/puppet/related-projects/facter/
 
 
 ## Build requirements
