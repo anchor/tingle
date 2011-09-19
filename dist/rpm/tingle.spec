@@ -11,9 +11,6 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
 
-# x64 anti-hack
-%define _lib lib
-
 %description
 tingle acts as a thin frontend to your operating system's native package 
 manager.  Unlike native tools, the tingle program serves only a single 
@@ -45,7 +42,7 @@ rm -rf %{buildroot}
 %doc LICENCE README
 %{_sbindir}/reboot-politely
 %{_sbindir}/tingle
-%{_libdir}/tingle/*
+%{_exec_prefix}/lib/tingle/*
 %{_usr}/share/man/man8/*
 %dir %{_sysconfdir}/tingle
 %dir %{_sysconfdir}/tingle/hooks/*
