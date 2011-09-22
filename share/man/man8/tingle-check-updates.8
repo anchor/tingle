@@ -42,7 +42,12 @@ List packages, one per line, in \fB/etc/tingle/unimportant\-packages\fR to have 
 As soon as an update to a \-\- retrospectively named \-\- important package is available, all pending updates (important or otherwise) will be applied\. This mechanism is designed to prevent unwarranted reboots for trivial package updates\.
 .
 .SH "RETURN VALUES"
-Returns non\-zero if the system has updates pending; otherwise, returns zero if the system is up to date\.
+Returns 0 if the system has no updates pending\.
+.P
+Returns 100 if the system has at least one update pending\.
+.
+.P
+Returns 1 on error\.
 .
 .SH "ENVIRONMENT"
 Non\-interactive mode may be forced by setting TINGLE_NONINTERACTIVE\.

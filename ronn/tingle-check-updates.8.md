@@ -41,8 +41,11 @@ trivial package updates.
 
 ## RETURN VALUES
 
-Returns non-zero if the system has updates pending; otherwise, returns 
-zero if the system is up to date.
+Returns 0 if the system has no updates pending.
+
+Returns 100 if the system has at least one update pending.
+
+Returns 1 on error.
 
 ## ENVIRONMENT
 

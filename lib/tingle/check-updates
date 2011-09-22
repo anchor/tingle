@@ -13,10 +13,10 @@ EOF
 
 execd /etc/tingle/hooks/pre-check.d
 
-rv=0
-if ! invoke_os_flavour "check-updates" ; then
-    rv=1
-fi
+set +e
+invoke_os_flavour "check-updates"
+rv=$?
+set -e
 
 execd /etc/tingle/hooks/post-check.d
 

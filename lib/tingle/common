@@ -12,7 +12,9 @@ UNIMPORTANT=/etc/tingle/unimportant-packages
 exec 3>&1
 exec 4>&2
 
-trap bail INT QUIT TERM ERR
+set -E
+trap handle_error ERR
+trap handle_interrupt INT QUIT TERM
 
 declare -a ignore_rvs
 
@@ -45,10 +47,6 @@ debug() {
     echo "$@" >&2
 
     exec 2>&4
-}
-
-bail() {
-    exit_clean 1
 }
 
 buffer() {
@@ -136,8 +134,20 @@ exit_clean() {
     exit $STATUS
 }
 
+handle_error() {
+    # A trap set on ERR is still hot even when set -e is not in effect.  
+    # I don't really care about failures outside of set -e sections.
+    if [ -n "$(echo $- | sed 's/[^e]//g')" ]; then
+        exit_clean 1
+    fi
+}
+
+handle_interrupt() {
+    exit_clean 1
+}
+
 invoke_os_flavour() {
-    local BASE="$1" FLAVA SUFFIX
+    local BASE="$1" FLAVA SUFFIX old_e
 
     case "$(os_flavour)" in
         CentOS|RedHat)
@@ -152,9 +162,16 @@ invoke_os_flavour() {
     esac
 
     FLAVA="${TINGLE_PREFIX}/lib/tingle/${BASE}-${SUFFIX}"
-    if [ -x "$FLAVA" ] ; then
+    if [ -x "$FLAVA" ]; then
         debug "Running $(basename $FLAVA)"
+        old_e=$(echo $- | sed 's/[^e]//g')
+        set +e
         "$FLAVA"
+        rv=$?
+        if [ -n "$old_e" ]; then
+            set -e
+        fi
+        return $rv
     else
         error "Could not execute $FLAVA"
     fi

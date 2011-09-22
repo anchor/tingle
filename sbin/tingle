@@ -15,6 +15,20 @@ EOF
     exit_clean 2
 }
 
+updates_pending() {
+    set +e
+    ${TINGLE_PREFIX}/lib/tingle/check-updates
+    rv=$?
+    set -e
+    if [ $rv -eq 100 ]; then
+        return 0
+    elif [ $rv -eq 0 ]; then
+        return 1
+    else
+        exit_clean 1
+    fi
+}
+
 if [ $# -ne 1 -o  $1 = "-h" -o $1 = "--help" ]; then
     usage
 fi
@@ -23,25 +37,25 @@ action=$1
 
 case $action in
     check)
-        if ${TINGLE_PREFIX}/lib/tingle/check-updates ; then
-            debug "No pending updates"
+        if updates_pending ; then
+            exit_clean 100
         else
-            exit_clean 1
+            debug "No pending updates"
         fi
     ;;
     warm)
-        if ! ${TINGLE_PREFIX}/lib/tingle/check-updates >/dev/null ; then
+        if updates_pending >/dev/null ; then
             ${TINGLE_PREFIX}/lib/tingle/warm-cache
         fi
     ;;
     apply)
-        if ! ${TINGLE_PREFIX}/lib/tingle/check-updates >/dev/null ; then
+        if updates_pending >/dev/null ; then
             ${TINGLE_PREFIX}/lib/tingle/warm-cache
             ${TINGLE_PREFIX}/lib/tingle/apply-updates
         fi
     ;;
     reboot)
-        if ! ${TINGLE_PREFIX}/lib/tingle/check-updates >/dev/null ; then
+        if updates_pending >/dev/null ; then
             ${TINGLE_PREFIX}/lib/tingle/warm-cache
             ${TINGLE_PREFIX}/lib/tingle/apply-updates
             ${TINGLE_PREFIX}/lib/tingle/reboot

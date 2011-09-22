@@ -40,7 +40,7 @@ do_or_die /usr/bin/yum -q check-update | \
   sort >$TMP
 cat $TMP
 if [ $(cat $TMP | wc -l) -gt 0 ]; then
-    exit_clean 1
+    exit_clean 100
 fi
 
 exit_clean 0
