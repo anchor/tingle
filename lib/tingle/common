@@ -51,9 +51,13 @@ bail() {
     exit_clean 1
 }
 
-# For children that return nonzero without actually failing.
+buffer() {
+    echo "$TMP_DIR/$(echo "$(date +%s)-$RANDOM-$@"  | sed "s/[ \t/-]//g")"
+}
+
+# For commands that return non-zero without actually failing.
 do_ignore_derp() {
-    # Hide the nuts-and-bots when running non-interactively.
+    # Since we can't reliably detect failures, assume stderr is useless.
     if ! is_interactive ; then
         exec 2>/dev/null
     fi
@@ -64,17 +68,15 @@ do_ignore_derp() {
 }
 
 do_or_die() {
-    local RUN_INTER suppress=no
+    local b suppress=no
 
-    if ! is_interactive ; then
-        exec 2>/dev/null
-        RUN_INTER="  Run interactively for verbose output."
-    fi
-
+    b="$(buffer $@)"
+    exec 2>"$b"
     set +e
     $@
     rv=$?
     set -e
+    exec 2>&4
     if [ $rv -ne 0 ]; then
         if [ ! -z $ignore_rvs ]; then
             for i in $(seq 0 $((${#ignore_rvs[@]} - 1))); do
@@ -85,20 +87,15 @@ do_or_die() {
             ignore_rvs=( )
         fi
         if [ "$suppress" != "yes" ]; then
-            error "\`$@' returned non-zero.${RUN_INTER}"
+            cat "$b" >&2
+            echo >&2
+            error "\`$@' returned non-zero"
         fi
     fi
-
-    exec 2>&4
 }
 
 execd() {
-    local d="$1"
-
-    if ! is_interactive ; then
-        exec 1>/dev/null
-        exec 2>&1
-    fi
+    local b_err b_out d="$1"
 
     if [ ! -d "$d" ] ; then
         warning "$d is not a valid hook scripts directory"
@@ -107,7 +104,20 @@ execd() {
         for i in $(find "${d}" -mindepth 1 -maxdepth 1 -type f); do
             if [ -x "$i" ]; then
                 debug "Executing $i"
-                if ! "$i" ; then
+                b_out="$(buffer $i)"
+                b_err="$(buffer $i)"
+                exec 1>"$b_out"
+                exec 2>"$b_err"
+                set +e
+                "$i"
+                rv=$?
+                set -e
+                exec 1>&3
+                exec 2>&4
+                if [ $rv -ne 0 ]; then
+                    cat "$b_out" >&1
+                    cat "$b_err" >&2
+                    echo >&2
                     error "\`$i' returned non-zero"
                 fi
             else
@@ -115,9 +125,6 @@ execd() {
             fi
         done
     fi
-
-    exec 1>&3
-    exec 2>&4
 }
 
 exit_clean() {
