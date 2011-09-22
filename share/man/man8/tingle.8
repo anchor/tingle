@@ -50,22 +50,22 @@ Warm the local package cache, apply outstanding package updates, and reboot the 
 \fBwarm\fR, \fBapply\fR, and \fBreboot\fR will all act as no\-ops if there are no pending updates to apply\. \fBtingle reboot\fR will only reboot the system if necessary\.
 .
 .SH "ERROR REPORTING"
-When started interactively at the shell, tingle will pass all standard error output from its children (apt\-get, yum, and so on) through to the terminal\. This mode of operation is designed primarily for problem diagnosis\.
+When attached to a terminal, tingle will pass all output from its children (apt\-get, yum, and so on) through to the operator\. This mode of operation is designed primarily for problem diagnosis\.
 .
 .P
-tingle warnings are output to standard error and will always begin with the text, \fB[warning]\fR\. Errors will similarly begin with the text, \fB[error]\fR, or \fB[abort]\fR\.
+Output is suppressed when running detached from a terminal\. This mode of operation is suitable for use with crond\.
 .
 .P
-Abort and error conditions will both trigger non\-zero exit codes to halt program execution; the difference between the two is a plain matter of semantics:
+tingle warnings are output to standard error and will always begin with the text, \fB[warning]\fR\. Errors will similarly begin with the text, \fB[error]\fR, or \fB[abort]\fR\. All three message classes are also written to syslog\.
+.
+.P
+Abort and error conditions will both trigger non\-zero exit codes to halt program execution; the difference between the two is a matter of semantics:
 .
 .P
 An error condition is raised whenever an operation is started, but fails to complete because of an unforeseen problem\. An error condition will typically originate from a child process\.
 .
 .P
-An abort condition is raised whenever an operation is actively avoided because of a visible problem\. An abort condition will typically originate from tingle itself\.
-.
-.SH "ENVIRONMENT"
-Non\-interactive mode may be forced by setting TINGLE_NONINTERACTIVE\.
+An abort condition is raised whenever an operation is actively eschewed because of a visible problem\. An abort condition will typically originate from tingle itself\.
 .
 .SH "AUTHOR"
 Saj Goonatilleke \fIsg@redu\.cx\fR

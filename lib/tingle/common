@@ -68,8 +68,10 @@ do_ignore_derp() {
 do_or_die() {
     local b suppress=no
 
-    b="$(buffer $@)"
-    exec 2>"$b"
+    if ! is_interactive ; then
+        b="$(buffer $@)"
+        exec 2>"$b"
+    fi
     set +e
     $@
     rv=$?
@@ -85,8 +87,10 @@ do_or_die() {
             ignore_rvs=( )
         fi
         if [ "$suppress" != "yes" ]; then
-            cat "$b" >&2
-            echo >&2
+            if ! is_interactive ; then
+                cat "$b" >&2
+                echo >&2
+            fi
             error "\`$@' returned non-zero"
         fi
     fi
@@ -102,10 +106,12 @@ execd() {
         for i in $(find "${d}" -mindepth 1 -maxdepth 1 -type f); do
             if [ -x "$i" ]; then
                 debug "Executing $i"
-                b_out="$(buffer $i)"
-                b_err="$(buffer $i)"
-                exec 1>"$b_out"
-                exec 2>"$b_err"
+                if ! is_interactive ; then
+                    b_out="$(buffer $i)"
+                    b_err="$(buffer $i)"
+                    exec 1>"$b_out"
+                    exec 2>"$b_err"
+                fi
                 set +e
                 "$i"
                 rv=$?
@@ -113,9 +119,11 @@ execd() {
                 exec 1>&3
                 exec 2>&4
                 if [ $rv -ne 0 ]; then
-                    cat "$b_out" >&1
-                    cat "$b_err" >&2
-                    echo >&2
+                    if ! is_interactive ; then
+                        cat "$b_out" >&1
+                        cat "$b_err" >&2
+                        echo >&2
+                    fi
                     error "\`$i' returned non-zero"
                 fi
             else

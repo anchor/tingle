@@ -1,11 +1,13 @@
-tingle-check-updates - checks for pending updates
-=================================================
+tingle-check-updates - check for pending updates
+================================================
 
 Part of the tingle(8) suite.
+
 
 ## SYNOPSIS
 
 `tingle` `check`
+
 
 ## DESCRIPTION
 
@@ -39,6 +41,7 @@ is available, all pending updates (important or otherwise) will be
 applied.  This mechanism is designed to prevent unwarranted reboots for 
 trivial package updates.
 
+
 ## RETURN VALUES
 
 Returns 0 if the system has no updates pending.
@@ -47,13 +50,12 @@ Returns 100 if the system has at least one update pending.
 
 Returns 1 on error.
 
-## ENVIRONMENT
 
-Non-interactive mode may be forced by setting TINGLE_NONINTERACTIVE.
 
 ## AUTHOR
 
 Saj Goonatilleke <sg@redu.cx>
+
 
 ## SEE ALSO
 

@@ -1,9 +1,11 @@
 tingle(8) - (n): a thin patch
 =============================
 
+
 ## SYNOPSIS
 
 `tingle` `check` | `warm` | `apply` | `reboot`
+
 
 ## DESCRIPTION
 
@@ -57,36 +59,38 @@ include:
 pending updates to apply.  `tingle reboot` will only reboot the system 
 if necessary.
 
+
 ## ERROR REPORTING
 
-When started interactively at the shell, tingle will pass all standard 
-error output from its children (apt-get, yum, and so on) through to the 
-terminal.  This mode of operation is designed primarily for problem 
-diagnosis.
+When attached to a terminal, tingle will pass all output from its 
+children (apt-get, yum, and so on) through to the operator.  This mode 
+of operation is designed primarily for problem diagnosis.
+
+Output is suppressed when running detached from a terminal.  This mode 
+of operation is suitable for use with crond.
 
 tingle warnings are output to standard error and will always begin with 
 the text, `[warning]`.  Errors will similarly begin with the text, 
-`[error]`, or `[abort]`.
+`[error]`, or `[abort]`.  All three message classes are also written to 
+syslog.
 
 Abort and error conditions will both trigger non-zero exit codes to halt 
-program execution; the difference between the two is a plain matter of 
+program execution; the difference between the two is a matter of 
 semantics:
 
 An error condition is raised whenever an operation is started, but fails 
 to complete because of an unforeseen problem.  An error condition will 
 typically originate from a child process.
 
-An abort condition is raised whenever an operation is actively avoided 
+An abort condition is raised whenever an operation is actively eschewed 
 because of a visible problem.  An abort condition will typically 
 originate from tingle itself.
 
-## ENVIRONMENT
-
-Non-interactive mode may be forced by setting TINGLE_NONINTERACTIVE.
 
 ## AUTHOR
 
 Saj Goonatilleke <sg@redu.cx>
+
 
 ## SEE ALSO
 

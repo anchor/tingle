@@ -1,11 +1,13 @@
-tingle-warm-cache - downloads (but does not apply) pending updates
-==================================================================
+tingle-warm-cache - download (but do not apply) pending updates
+===============================================================
 
 Part of the tingle(8) suite.
+
 
 ## SYNOPSIS
 
 `tingle` `warm`
+
 
 ## DESCRIPTION
 
@@ -27,18 +29,16 @@ appropriate:
 Execution order will correspond to the lexical sort order of script file 
 names.  The first hook script failure will trigger an immediate abort.
 
+
 ## RETURN VALUES
 
-Returns non-zero if something broke.  Run interactively for full 
-standard error output.
+Returns non-zero if something broke.
 
-## ENVIRONMENT
-
-Non-interactive mode may be forced by setting TINGLE_NONINTERACTIVE.
 
 ## AUTHOR
 
 Saj Goonatilleke <sg@redu.cx>
+
 
 ## SEE ALSO
 
