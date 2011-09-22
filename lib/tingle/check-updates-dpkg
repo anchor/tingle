@@ -8,14 +8,14 @@ usage() {
     cat - >&2 <<EOF
 Usage: check-updates-dpkg
 EOF
-    exit 2
+    exit_clean 2
 }
 
 export DEBIAN_FRONTEND=noninteractive
 
 do_or_die /usr/bin/apt-get update >/dev/null
 
-TMP=$(do_or_die mktemp tingle.XXXXXX)
+TMP="${TMP_DIR}/pkg-list"
 
 if [ ! -f $UNIMPORTANT ]; then
     do_or_die touch $UNIMPORTANT
@@ -28,8 +28,7 @@ do_or_die /usr/bin/apt-get -qqs dist-upgrade | \
   sort >$TMP
 cat $TMP
 if [ $(cat $TMP | wc -l) -gt 0 ]; then
-    rm -f $TMP
-    exit 1
+    exit_clean 1
 fi
 
-rm -f $TMP
+exit_clean 0

@@ -10,7 +10,7 @@ Usage: reboot-politely
   (or) reboot-politely MESSAGE
   (or) reboot-politely MINUTES MESSAGE
 EOF
-    exit 2
+    exit_clean 2
 }
 
 MINUTES=1
@@ -55,3 +55,5 @@ job=$(echo "/sbin/shutdown -fr now" | \
   awk '/^job/ { print $2; }')
 
 debug "Reboot pending.  \`atrm ${job}' to abort."
+
+exit_clean 0

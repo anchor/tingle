@@ -8,7 +8,7 @@ usage() {
     cat - >&2 <<EOF
 Usage: tingle reboot
 EOF
-    exit 2
+    exit_clean 2
 }
 
 execd /etc/tingle/hooks/pre-reboot.d
@@ -22,3 +22,5 @@ reboot-politely 10 "$MESSAGE"
 # These hooks must not take longer than ten minutes to run (for what I 
 # hope are obvious reasons).
 execd /etc/tingle/hooks/post-reboot.d
+
+exit_clean 0

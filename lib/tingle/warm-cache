@@ -8,7 +8,7 @@ usage() {
     cat - >&2 <<EOF
 Usage: tingle warm
 EOF
-    exit 2
+    exit_clean 2
 }
 
 execd /etc/tingle/hooks/pre-warm.d
@@ -16,3 +16,5 @@ execd /etc/tingle/hooks/pre-warm.d
 invoke_os_flavour "warm-cache"
 
 execd /etc/tingle/hooks/post-warm.d
+
+exit_clean 0

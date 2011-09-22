@@ -8,7 +8,7 @@ usage() {
     cat - >&2 <<EOF
 Usage: tingle apply
 EOF
-    exit 2
+    exit_clean 2
 }
 
 # Your native package manager should be maintaining its own change log.  
@@ -21,3 +21,5 @@ execd /etc/tingle/hooks/pre-apply.d
 invoke_os_flavour "apply-updates"
 
 execd /etc/tingle/hooks/post-apply.d
+
+exit_clean 0

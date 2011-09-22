@@ -10,3 +10,5 @@ case "$(os_flavour)" in
           >/dev/null
     ;;
 esac
+
+exit_clean 0

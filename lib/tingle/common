@@ -12,6 +12,8 @@ UNIMPORTANT=/etc/tingle/unimportant-packages
 exec 3>&1
 exec 4>&2
 
+trap bail INT QUIT TERM ERR
+
 abort() {
     # We could pass -s to logger and let it do the echo out to stderr, 
     # but I don't want to pass ABORTAG and friends into syslog.  That's 
@@ -19,13 +21,13 @@ abort() {
 
     log_error "$@"
     echo "$ABORTAG $@" >&4
-    exit 2
+    exit_clean 2
 }
 
 error() {
     log_error "$@"
     echo "$ERRTAG $@" >&4
-    exit 1
+    exit_clean 1
 }
 
 warning() {
@@ -41,6 +43,10 @@ debug() {
     echo "$@" >&2
 
     exec 2>&4
+}
+
+bail() {
+    exit_clean 1
 }
 
 # For children that return nonzero without actually failing.
@@ -96,6 +102,13 @@ execd() {
     exec 2>&4
 }
 
+exit_clean() {
+    STATUS=0
+    [ -n "$1" ] && STATUS=$1
+    nuke_tmp
+    exit $STATUS
+}
+
 invoke_os_flavour() {
     BASE="$1"
 
@@ -138,6 +151,10 @@ log_warning() {
     logger -p user.warn -t "$SYSLOGTAG" -- "$@" || true
 }
 
+nuke_tmp() {
+    rm -fr "$TMP_DIR"
+}
+
 os_flavour() {
     if [ -e /etc/redhat-release ]; then
         if grep -qi centos /etc/redhat-release ; then
@@ -159,3 +176,5 @@ KILLSWITCH="${TINGLE_PREFIX}/etc/tingle/noupdate"
 if [ -f $KILLSWITCH ]; then
     abort "Aborting on killswitch.  Remove $KILLSWITCH and try again."
 fi
+
+TMP_DIR="$(mktemp -d -t tingle.XXXXXX)"

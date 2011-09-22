@@ -12,7 +12,7 @@ Usage: tingle ACTION
 
        See tingle(8).
 EOF
-    exit 2
+    exit_clean 2
 }
 
 if [ $# -ne 1 -o  $1 = "-h" -o $1 = "--help" ]; then
@@ -26,7 +26,7 @@ case $action in
         if ${TINGLE_PREFIX}/lib/tingle/check-updates ; then
             debug "No pending updates"
         else
-            exit 1
+            exit_clean 1
         fi
     ;;
     warm)
@@ -50,3 +50,5 @@ case $action in
     *)
         usage
 esac
+
+exit_clean 0

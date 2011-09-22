@@ -8,7 +8,7 @@ usage() {
     cat - >&2 <<EOF
 Usage: tingle check
 EOF
-    exit 2
+    exit_clean 2
 }
 
 execd /etc/tingle/hooks/pre-check.d
@@ -20,4 +20,4 @@ fi
 
 execd /etc/tingle/hooks/post-check.d
 
-exit $rv
+exit_clean $rv
