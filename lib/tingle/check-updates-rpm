@@ -20,6 +20,7 @@ TMP="${TMP_DIR}/pkg-list"
 if [ ! -f $UNIMPORTANT ]; then
     do_or_die touch $UNIMPORTANT
 fi
+ignore_rvs=( 100 )
 do_or_die /usr/bin/yum -q check-update | \
   awk '
   BEGIN {

@@ -14,6 +14,8 @@ exec 4>&2
 
 trap bail INT QUIT TERM ERR
 
+declare -a ignore_rvs
+
 abort() {
     # We could pass -s to logger and let it do the echo out to stderr, 
     # but I don't want to pass ABORTAG and friends into syslog.  That's 
@@ -62,25 +64,41 @@ do_ignore_derp() {
 }
 
 do_or_die() {
+    local RUN_INTER suppress=no
+
     if ! is_interactive ; then
         exec 2>/dev/null
         RUN_INTER="  Run interactively for verbose output."
     fi
 
-    if ! $@ ; then
-        error "\`$@' returned non-zero.${RUN_INTER}"
+    set +e
+    $@
+    rv=$?
+    set -e
+    if [ $rv -ne 0 ]; then
+        if [ ! -z $ignore_rvs ]; then
+            for i in $(seq 0 $((${#ignore_rvs[@]} - 1))); do
+                if [ $rv -eq "${ignore_rvs[$i]}" ]; then
+                    suppress=yes
+                fi
+            done
+            ignore_rvs=( )
+        fi
+        if [ "$suppress" != "yes" ]; then
+            error "\`$@' returned non-zero.${RUN_INTER}"
+        fi
     fi
 
     exec 2>&4
 }
 
 execd() {
+    local d="$1"
+
     if ! is_interactive ; then
         exec 1>/dev/null
         exec 2>&1
     fi
-
-    d="$1"
 
     if [ ! -d "$d" ] ; then
         warning "$d is not a valid hook scripts directory"
@@ -103,6 +121,8 @@ execd() {
 }
 
 exit_clean() {
+    local STATUS
+
     STATUS=0
     [ -n "$1" ] && STATUS=$1
     nuke_tmp
@@ -110,7 +130,7 @@ exit_clean() {
 }
 
 invoke_os_flavour() {
-    BASE="$1"
+    local BASE="$1" FLAVA SUFFIX
 
     case "$(os_flavour)" in
         CentOS|RedHat)
