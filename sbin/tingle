@@ -29,7 +29,7 @@ updates_pending() {
     fi
 }
 
-if [ $# -ne 1 -o  $1 = "-h" -o $1 = "--help" ]; then
+if [ $# -ne 1 -o "$1" = "-h" -o "$1" = "--help" ]; then
     usage
 fi
 
