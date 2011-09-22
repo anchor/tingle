@@ -12,12 +12,10 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:      noarch
 
 %description
-tingle acts as a thin frontend to your operating system's native package 
-manager.  Unlike native tools, the tingle program serves only a single 
-purpose:  to keep all installed software packages up to date with 
-respect to your repository mirrors.  It does this whilst presenting a 
-simple interface, consistent across all recognised operating systems, 
-and is usable by human and machine operators alike.
+tingle is a tool for applying packaged software updates.  It works by 
+wrapping a thin shell program around your operating system's native 
+package manager.  Pesky differences between package management 
+implementations are abstracted away to simplify patch procedure.  
 
 
 %prep

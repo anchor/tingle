@@ -7,19 +7,21 @@ tingle(8) - (n): a thin patch
 
 ## DESCRIPTION
 
-tingle acts as a thin frontend to your operating system's native package 
-manager.  Unlike native tools, the tingle program serves only a single 
-purpose:  to keep all installed software packages up to date with 
-respect to your repository mirrors.  It does this whilst presenting a 
-simple interface, consistent across all recognised operating systems, 
-and is usable by human and machine operators alike.
+tingle is a tool for applying packaged software updates.  It works by 
+wrapping a thin shell program around your operating system's native 
+package manager.  Pesky differences between package management 
+implementations are abstracted away to simplify patch procedure.  
+
+Human operators can interact with tingle at the shell, or delegate their 
+work to automated processes that can do the same.  In either case, the 
+actor need not bother with commands that are specific to any particular 
+operating system.
 
 tingle was designed to take aggressive charge over an environment 
 scaling many hundreds of heterogeneous systems, where the risk and cost 
 of a single compromised system exceeded the likelihood and cost of a 
-faulty update (regression).  Carefully orchestrated autonomous operation 
-is possible with the aid of tools like Func or The Marionette 
-Collective.
+faulty update.  Carefully orchestrated autonomous operation is possible 
+with the aid of tools like Func or The Marionette Collective.
 
 If precise change management is a staple of your environment, ensure 
 your local package repositories contain only those updates you are 
@@ -28,14 +30,13 @@ native package manager's pinning capabilities.  tingle will gobble down
 whatever you leave in the open.
 
 Site or host-specific maintenance procedures can be condensed into 
-tingle hook scripts and executed between the actions listed below.  Hook 
-script failures (where a failure is signalled with a non-zero exit 
-status) will trigger an immediate abort.
+tingle hook scripts and automatically executed between the actions 
+listed below.  Hook script failures will trigger an immediate abort.  
+Hook script failures may be signalled with a non-zero exit status.
 
-Systems administrators plan maintenance (at least in part) in terms of 
-the most drastic action they expect to perform.  The action supplied to 
-tingle acts as a brake:  a means of limiting the automaton's reach.  
-Supported actions include:
+The only argument tingle expects to receive is a description of the most 
+drastic action the operator is prepared to commit to.  Supported actions 
+include:
 
 * `check`:
   Check for pending updates.  See tingle-check-updates(8).
