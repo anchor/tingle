@@ -145,7 +145,7 @@ exit_clean() {
 handle_error() {
     # A trap set on ERR is still hot even when set -e is not in effect.  
     # I don't really care about failures outside of set -e sections.
-    if [ -n "$(echo $- | sed 's/[^e]//g')" ]; then
+    if echo "$-" | grep -q e; then
         exit_clean 1
     fi
 }
@@ -155,7 +155,7 @@ handle_interrupt() {
 }
 
 invoke_os_flavour() {
-    local BASE="$1" FLAVA SUFFIX old_e
+    local BASE="$1" FLAVA SUFFIX old_opts
 
     case "$(os_flavour)" in
         CentOS|RedHat)
@@ -172,11 +172,11 @@ invoke_os_flavour() {
     FLAVA="${TINGLE_PREFIX}/lib/tingle/${BASE}-${SUFFIX}"
     if [ -x "$FLAVA" ]; then
         debug "Running $(basename $FLAVA)"
-        old_e=$(echo $- | sed 's/[^e]//g')
+        old_opts="$-"
         set +e
         "$FLAVA"
         rv=$?
-        if [ -n "$old_e" ]; then
+        if echo "$old_opts" | grep -q e; then
             set -e
         fi
         return $rv
