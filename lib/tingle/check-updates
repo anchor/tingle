@@ -14,6 +14,7 @@ EOF
 execd /etc/tingle/hooks/pre-check.d
 
 set +e
+ignore_rvs=( 100 )
 invoke_os_flavour "check-updates"
 rv=$?
 set -e

@@ -66,20 +66,23 @@ do_ignore_derp() {
 }
 
 do_or_die() {
-    local b suppress=no
+    local b i old_opts rv suppress=no
 
     if ! is_interactive ; then
         b="$(buffer $@)"
         exec 2>"$b"
     fi
+    old_opts="$-"
     set +e
     $@
     rv=$?
-    set -e
+    if echo "$old_opts" | grep -q e; then
+        set -e
+    fi
     exec 2>&4
     if [ $rv -ne 0 ]; then
         if [ ! -z $ignore_rvs ]; then
-            for i in $(seq 0 $((${#ignore_rvs[@]} - 1))); do
+            for (( i=0 ; i < ${#ignore_rvs[@]} ; i++ )); do
                 if [ $rv -eq "${ignore_rvs[$i]}" ]; then
                     suppress=yes
                 fi
@@ -92,12 +95,14 @@ do_or_die() {
                 echo >&2
             fi
             error "\`$@' returned non-zero"
+        else
+            return $rv
         fi
     fi
 }
 
 execd() {
-    local b_err b_out d="$1"
+    local b_err b_out d="$1" i rv
 
     if [ ! -d "$d" ] ; then
         warning "$d is not a valid hook scripts directory"
@@ -143,10 +148,12 @@ exit_clean() {
 }
 
 handle_error() {
+    local rv=$?
+
     # A trap set on ERR is still hot even when set -e is not in effect.  
     # I don't really care about failures outside of set -e sections.
     if echo "$-" | grep -q e; then
-        exit_clean 1
+        exit_clean $rv
     fi
 }
 
@@ -155,7 +162,7 @@ handle_interrupt() {
 }
 
 invoke_os_flavour() {
-    local BASE="$1" FLAVA SUFFIX old_opts
+    local BASE="$1" FLAVA SUFFIX old_opts rv
 
     case "$(os_flavour)" in
         CentOS|RedHat)
@@ -174,7 +181,7 @@ invoke_os_flavour() {
         debug "Running $(basename $FLAVA)"
         old_opts="$-"
         set +e
-        "$FLAVA"
+        do_or_die "$FLAVA"
         rv=$?
         if echo "$old_opts" | grep -q e; then
             set -e
