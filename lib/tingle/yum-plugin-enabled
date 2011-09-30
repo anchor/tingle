@@ -1,0 +1,37 @@
+#!/usr/bin/python
+
+"""
+yum-plugin-enabled - checks for Yum plugins
+
+USAGE
+
+    yum-plugin-enabled PLUGIN
+
+RETURN VALUES
+
+    0 if PLUGIN is installed and enabled.
+
+"""
+from yum.plugins import TYPE_CORE, TYPE_INTERACTIVE
+import optparse
+import os
+import sys
+import yum
+
+def usage():
+    print >>sys.stderr, "Usage:\n\t%s PLUGIN" % \
+      os.path.basename(sys.argv[0])
+    sys.exit(2)
+
+sys.stdout = open('/dev/null', 'w')
+
+try:
+    plugin = sys.argv[1]
+except IndexError:
+    usage()
+
+y = yum.YumBase();
+y.doConfigSetup(plugin_types=(TYPE_CORE, TYPE_INTERACTIVE),
+  optparser=optparse.OptionParser())
+if plugin not in y.plugins._plugins.keys():
+    sys.exit(1)

@@ -50,7 +50,16 @@ out of the site's availability monitoring system before rebooting.
 
 ## Installation requirements
 
-* yum-downloadonly (required only on CentOS and RHEL)
+* yum-downloadonly (required only on CentOS and RHEL 5)
+* yum-plugin-downloadonly (required only on CentOS and RHEL 6)
+
+You might also like:
+
+* yum-tsflags (recommended on CentOS and RHEL 5)
+* yum-plugin-tsflags (recommended on CentOS and RHEL 6)
+
+With the tsflags yum plugin installed, tingle can test that all package 
+dependencies resolve before it comes time to install them.
 
 
 ## Development requirements
