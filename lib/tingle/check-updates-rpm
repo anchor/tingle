@@ -21,7 +21,7 @@ if [ ! -f $UNIMPORTANT ]; then
     do_or_die touch $UNIMPORTANT
 fi
 ignore_rvs=( 100 )
-do_or_die /usr/bin/yum -q check-update | \
+do_or_die "$BIGPTY" 300 20 /usr/bin/yum -q check-update | \
   awk '
   BEGIN {
       obsoletes = 0;

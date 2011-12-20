@@ -1,0 +1,74 @@
+#!/usr/bin/python
+
+"""
+bigpty - fork a process attached to a big PTY
+
+Used as a workaround when:
+
+    dumb-program | pipeline
+
+ends up wrapping dumb-program's output because dumb-program formats 
+its output regardless of whether it is tied to a terminal or not.
+
+Yum, I'm looking at you.
+
+
+USAGE
+
+    bigpty COLUMNS ROWS PROGRAM [ ... ]
+
+"""
+
+import fcntl
+import os
+import pty
+import struct
+import subprocess
+import sys
+import termios
+
+def usage():
+    print "Usage:\n\tbigpty COLUMNS ROWS PROGRAM [ ... ]"
+    sys.exit(2)
+
+try:
+    columns = int(sys.argv.pop(1))
+    rows = int(sys.argv.pop(1))
+except:
+    usage()
+if len(sys.argv) < 2: usage()
+
+# This pipe is used only as a synchronisation mechanism.  The parent 
+# closes pw when it is ready for the child to fork PROGRAM.  Nothing 
+# ever gets written to the pipe.
+(pr, pw) = os.pipe()
+
+(pid, ptyfd) = pty.fork()
+if pid == 0:
+    os.close(pw)
+
+    # Wait for parent to resize our PTY.
+    os.read(pr, 1)
+    os.close(pr)
+
+    # PTY is ready.  Do real work now.
+    sys.exit(subprocess.call(sys.argv[1:]))
+else:
+    os.close(pr)
+
+    # Resize child's PTY.
+    buf = struct.pack('hhhh', rows, columns, 0, 0)
+    fcntl.ioctl(ptyfd, termios.TIOCSWINSZ, buf)
+
+    # Signal child.
+    os.close(pw)
+
+    # Copy output from the PTY to our standard output.
+    while True:
+        try: r = os.read(ptyfd, 512)
+        except: break
+        if r == "": break
+        sys.stdout.write(r)
+
+    (pid, status) = os.wait()
+    sys.exit(status >> 8)
