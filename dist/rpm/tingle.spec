@@ -1,5 +1,5 @@
 Name:           tingle
-Version:        0.5.0
+Version:        0.5.1
 Release:        1%{?dist}
 Summary:        A package updater for busy system administrators
 
@@ -49,6 +49,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Tue Dec 20 2011 Saj Goonatilleke <sg@redu.cx> - 0.5.1-1
+- New release.
+
 * Mon Sep 30 2011 Saj Goonatilleke <sg@redu.cx> - 0.5.0-1
 - New release.
 
