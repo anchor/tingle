@@ -43,7 +43,7 @@ if [ $(cat $TMP | wc -l) -gt 0 ]; then
     # Resolve dependencies if we have the tsflags plugin installed and 
     # enabled.  yum check-update does not do this work itself.
     pluginenabled="${TINGLE_PREFIX}/lib/tingle/yum-plugin-enabled"
-    if "$pluginenabled" "tsflags"; then
+    if "$pluginenabled" "tsflags" 2>/dev/null; then
         do_or_die yum update -y --tsflags=test >/dev/null
     fi
     exit_clean 100
