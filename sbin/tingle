@@ -6,9 +6,10 @@ set -e
 
 usage() {
     cat - >&2 <<EOF
-Usage: tingle ACTION
+Usage: tingle ACTION ARG
 
-       Valid actions include check, warm, apply, and reboot.
+       Valid actions include check, warm, apply, and reboot. ARG is only
+       used by the reboot action.
 
        See tingle(8).
 EOF
@@ -29,11 +30,12 @@ updates_pending() {
     fi
 }
 
-if [ $# -ne 1 -o "$1" = "-h" -o "$1" = "--help" ]; then
+if [ $# -gt 2 -o "$1" = "-h" -o "$1" = "--help" ]; then
     usage
 fi
 
 action=$1
+arg=$2
 
 case $action in
     check)
@@ -58,7 +60,7 @@ case $action in
         if updates_pending >/dev/null ; then
             ${TINGLE_PREFIX}/lib/tingle/warm-cache
             ${TINGLE_PREFIX}/lib/tingle/apply-updates
-            ${TINGLE_PREFIX}/lib/tingle/reboot
+            ${TINGLE_PREFIX}/lib/tingle/reboot $arg
         fi
     ;;
     *)

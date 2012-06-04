@@ -6,18 +6,23 @@ set -e
 
 usage() {
     cat - >&2 <<EOF
-Usage: tingle reboot
+Usage: tingle reboot [min]
 EOF
     exit_clean 2
 }
 
 execd /etc/tingle/hooks/pre-reboot.d
 
-MESSAGE="This system will reboot in ten minutes for a software update.
+min_to_reboot=$1
+if [ "x$min_to_reboot" = "x" ]; then
+  min_to_reboot=10
+fi
+
+MESSAGE="This system will reboot in $min_to_reboot minutes for a software update.
 
 Please save all open work and log out."
 
-reboot-politely 10 "$MESSAGE"
+reboot-politely $min_to_reboot "$MESSAGE"
 
 # These hooks must not take longer than ten minutes to run (for what I 
 # hope are obvious reasons).

@@ -4,7 +4,7 @@ tingle(8) - (n): a thin patch
 
 ## SYNOPSIS
 
-`tingle` `check` | `warm` | `apply` | `reboot`
+`tingle` `check` | `warm` | `apply` | `reboot` `[min]`
 
 
 ## DESCRIPTION
