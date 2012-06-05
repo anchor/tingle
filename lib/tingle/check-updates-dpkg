@@ -20,7 +20,7 @@ TMP="${TMP_DIR}/pkg-list"
 if [ ! -f $UNIMPORTANT ]; then
     do_or_die touch $UNIMPORTANT
 fi
-do_or_die /usr/bin/apt-get -qqs dist-upgrade | \
+do_or_die /usr/bin/apt-get -qqs upgrade | \
   perl -nle 'if (/^Inst ([\w\.-]+)( \[[\w\.+:~-]+\])? \(([\w\.+:~-]+)/) {
       print "$1 $3";
   }' | \

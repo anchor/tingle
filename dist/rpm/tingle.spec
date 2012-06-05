@@ -1,5 +1,5 @@
 Name:           tingle
-Version:        0.5.1
+Version:        0.5.2
 Release:        1%{?dist}
 Summary:        A package updater for busy system administrators
 
@@ -49,6 +49,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Tue Jun 05 2012 Steven McDonald <steven.mcdonald@anchor.net.au> - 0.5.2-1
+- New release.
+
 * Tue Dec 20 2011 Saj Goonatilleke <sg@redu.cx> - 0.5.1-1
 - New release.
 

@@ -15,6 +15,6 @@ export DEBIAN_FRONTEND=noninteractive
 
 do_or_die /usr/bin/apt-get update >/dev/null
 do_or_die /usr/bin/apt-get --download-only \
-  -o APT::Get::Show-Upgraded=true -y dist-upgrade >/dev/null
+  -o APT::Get::Show-Upgraded=true -y upgrade >/dev/null
 
 exit_clean 0
