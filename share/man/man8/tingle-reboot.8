@@ -10,7 +10,7 @@
 Part of the tingle(8) suite\.
 .
 .SH "SYNOPSIS"
-\fBtingle\fR \fBreboot\fR
+\fBtingle\fR \fBreboot\fR \fB[min]\fR
 .
 .SH "DESCRIPTION"
 Rebooting a system is still the simplest and most reliable means of loading modified kernel and shared object code into memory\. (But see http://www\.ksplice\.com/ for a promising take on the kernel problem\.)
@@ -34,6 +34,11 @@ The following hook scripts, if they exist, will be executed when appropriate:
 .
 .P
 Execution order will correspond to the lexical sort order of script file names\. The first hook script failure will trigger an immediate abort\.
+.
+.P
+You can supply an optional argument \fBmin\fR, which is the number of minutes to
+wait until a reboot\. If not supplied it defaults to 10 minutes\.
+
 .
 .SH "RETURN VALUES"
 Returns non\-zero if something broke\.

@@ -6,7 +6,7 @@ Part of the tingle(8) suite.
 
 ## SYNOPSIS
 
-`tingle` `reboot`
+`tingle` `reboot` `[min]`
 
 
 ## DESCRIPTION
@@ -29,6 +29,8 @@ appropriate:
 Execution order will correspond to the lexical sort order of script file 
 names.  The first hook script failure will trigger an immediate abort.
 
+You can supply an optional argument `min`, which is the number of minutes to
+wait until a reboot. If not supplied it defaults to 10 minutes.
 
 ## RETURN VALUES
 
