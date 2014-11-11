@@ -33,27 +33,32 @@ if ! echo $MINUTES | egrep -q '^[[:digit:]]+$'; then
     usage
 fi
 
-# If an atd job is scheduled with timing arguments of `now +1 minutes', 
-# it feels like it executes at the next *turn of the minute*, which is 
-# almost certainly less than one real minute away.  Adding one `extra' 
-# minute will better match expectations.
-MINUTES=$(($MINUTES + 1))
-
-cat - >/etc/nologin <<EOF
+LINK=$(readlink /sbin/shutdown 2>/dev/null)
+if [ "${LINK##*/}" = "systemctl" ]; then
+    do_or_die /sbin/shutdown --reboot "+${MINUTES}" "$MESSAGE"
+else
+    cat - >/etc/nologin <<EOF
 A reboot of this system has been scheduled.
 
 Please try again in five minutes.
 EOF
 
-echo "$MESSAGE" | wall
+    echo "$MESSAGE" | wall
 
-# Do not use shutdown with a large time delay as that would block this 
-# program for minutes at a time.  Behaviour like that would grow tiring 
-# if you were tingling from Func or MCollective.
-job=$(echo "/sbin/shutdown -fr now" | \
-  at now +${MINUTES} minutes 2>&1 | \
-  awk '/^job/ { print $2; }')
+    # If an atd job is scheduled with timing arguments of `now +1 minutes',
+    # it feels like it executes at the next *turn of the minute*, which is
+    # almost certainly less than one real minute away.  Adding one `extra'
+    # minute will better match expectations.
+    MINUTES=$(($MINUTES + 1))
 
-debug "Reboot pending.  \`atrm ${job}' to abort."
+    # Do not use shutdown with a large time delay as that would block this
+    # program for minutes at a time.  Behaviour like that would grow tiring
+    # if you were tingling from Func or MCollective.
+    job=$(echo "/sbin/shutdown -fr now" | \
+      at now +${MINUTES} minutes 2>&1 | \
+      awk '/^job/ { print $2; }')
+
+    debug "Reboot pending.  \`atrm ${job}' to abort."
+fi
 
 exit_clean 0
