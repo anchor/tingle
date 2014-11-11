@@ -1,7 +1,6 @@
 RELEASE ?= $(shell cat RELEASE)
 SOURCES = LICENCE \
   Makefile \
-  README \
   README.md \
   RELEASE \
   $(shell find etc -type f) \
@@ -26,7 +25,7 @@ dist/tingle-$(RELEASE).tar.gz: $(SOURCES)
 		  -cz -f $@ -s ',^,tingle-$(RELEASE)/,' $(SOURCES) ; \
 	else \
 		tar --exclude '.*.swp' --exclude '.gitignore' \
-		  -cz -f $@ --replace ',^,tingle-$(RELEASE)/,' $(SOURCES) ; \
+		  -cz -f $@ --transform 's,^,tingle-$(RELEASE)/,' $(SOURCES) ; \
 	fi
 
 doc: share/man/man8/reboot-politely.8 \

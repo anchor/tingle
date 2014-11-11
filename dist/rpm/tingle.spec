@@ -37,7 +37,7 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,-)
-%doc LICENCE README
+%doc LICENCE README.md
 %{_sbindir}/reboot-politely
 %{_sbindir}/tingle
 %{_exec_prefix}/lib/tingle/*
