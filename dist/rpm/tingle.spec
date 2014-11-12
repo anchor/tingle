@@ -7,28 +7,33 @@ Group:          Applications/System
 License:        BSD 2-clause
 URL:            https://github.com/anchor/tingle
 Source0:        https://github.com/downloads/anchor/tingle/tingle-%{version}.tar.gz
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
+BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:      noarch
 
+Requires:       /sbin/shutdown
+%if 0%{?rhel} < 7 && 0%{?fedora} < 15
+Requires:       at
+%endif
+
 %description
-tingle is a tool for applying packaged software updates.  It works by 
-wrapping a thin shell program around your operating system's native 
-package manager.  Pesky differences between package management 
-implementations are abstracted away to simplify patch procedure.  
+tingle is a tool for applying packaged software updates. It works by
+wrapping a thin shell program around your operating system's native
+package manager.  Pesky differences between package management
+implementations are abstracted away to simplify patch procedure.
 
 
 %prep
-%setup
+%setup -q
 
 
 %build
-make
+%{__make}
 
 
 %install
 rm -rf %{buildroot}
-make install DESTDIR=%{buildroot}
+%{__make} install DESTDIR=%{buildroot}
 
 
 %clean
@@ -36,16 +41,18 @@ rm -rf %{buildroot}
 
 
 %files
-%defattr(-,root,root,-)
+%defattr(0644,root,root,0755)
 %doc LICENCE README.md
-%{_sbindir}/reboot-politely
-%{_sbindir}/tingle
-%{_exec_prefix}/lib/tingle/*
-%{_usr}/share/man/man8/*
+%attr(0755,root,root) %{_sbindir}/reboot-politely
+%attr(0755,root,root) %{_sbindir}/tingle
+%dir %{_exec_prefix}/lib/tingle
+%attr(0755,root,root) %{_exec_prefix}/lib/tingle/*
+%{_datadir}/man/man8/*
 %dir %{_sysconfdir}/tingle
+%dir %{_sysconfdir}/tingle/hooks
 %dir %{_sysconfdir}/tingle/hooks/*
-%config %{_sysconfdir}/tingle/hooks/post-apply.d/remove-old-kernels
-%config %{_sysconfdir}/tingle/unimportant-packages
+%config(noreplace,missingok) %attr(0755,root,root) %{_sysconfdir}/tingle/hooks/post-apply.d/remove-old-kernels
+%config(noreplace,missingok) %{_sysconfdir}/tingle/unimportant-packages
 
 
 %changelog
@@ -55,13 +62,13 @@ rm -rf %{buildroot}
 * Tue Dec 20 2011 Saj Goonatilleke <sg@redu.cx> - 0.5.1-1
 - New release.
 
-* Mon Sep 30 2011 Saj Goonatilleke <sg@redu.cx> - 0.5.0-1
+* Fri Sep 30 2011 Saj Goonatilleke <sg@redu.cx> - 0.5.0-1
 - New release.
 
-* Mon Sep 30 2011 Saj Goonatilleke <sg@redu.cx> - 0.4.1-1
+* Fri Sep 30 2011 Saj Goonatilleke <sg@redu.cx> - 0.4.1-1
 - New release.
 
-* Mon Sep 22 2011 Saj Goonatilleke <sg@redu.cx> - 0.4.0-1
+* Thu Sep 22 2011 Saj Goonatilleke <sg@redu.cx> - 0.4.0-1
 - New release.
 
 * Mon Sep 19 2011 Saj Goonatilleke <sg@redu.cx> - 0.3.0-1
