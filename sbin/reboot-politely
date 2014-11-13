@@ -35,7 +35,7 @@ if ! echo "$MINUTES" | egrep -q '^[[:digit:]]+$'; then
     usage
 fi
 
-LINK=$(readlink /sbin/shutdown 2>/dev/null)
+LINK=$(readlink /sbin/shutdown 2>/dev/null || :)
 if [ "${LINK##*/}" = "systemctl" ]; then
     do_or_die /sbin/shutdown --reboot "+${MINUTES}" "$MESSAGE"
 else
