@@ -5,7 +5,7 @@ ERRTAG="[error]"
 WARNTAG="[warning]"
 SYSLOGTAG="tingle"
 
-export PATH=/sbin:/bin:/usr/sbin:/usr/bin
+export PATH=/usr/sbin:/usr/bin:/sbin:/bin
 
 UNIMPORTANT=/etc/tingle/unimportant-packages
 
