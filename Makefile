@@ -80,4 +80,4 @@ share/man/man8/tingle-warm-cache.8: ronn/tingle-warm-cache.8.md
 	ronn --pipe --roff ronn/tingle-warm-cache.8.md > \
 	  share/man/man8/tingle-warm-cache.8
 
-.PHONY: all doc install tarball
+.PHONY: all clean dist dist/tingle-$(RELEASE).tar.gz doc install tarball
