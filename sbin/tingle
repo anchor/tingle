@@ -49,12 +49,14 @@ case $action in
         fi
     ;;
     apply)
+        abort_on_killswitch
         if updates_pending >/dev/null ; then
             ${TINGLE_PREFIX}/lib/tingle/warm-cache
             ${TINGLE_PREFIX}/lib/tingle/apply-updates
         fi
     ;;
     reboot)
+        abort_on_killswitch
         if updates_pending >/dev/null ; then
             ${TINGLE_PREFIX}/lib/tingle/warm-cache
             ${TINGLE_PREFIX}/lib/tingle/apply-updates

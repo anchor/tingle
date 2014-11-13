@@ -236,10 +236,12 @@ os_flavour() {
     fi
 }
 
-# All potentially disastrous automated processes need a killswitch 
-# within easy reach.
-if [ -f $KILLSWITCH ]; then
-    abort "Aborting on killswitch.  Remove $KILLSWITCH and try again."
-fi
+abort_on_killswitch() {
+    # All potentially disastrous automated processes need a killswitch
+    # within easy reach.
+    if [ -f $KILLSWITCH ]; then
+        abort "Aborting on killswitch.  Remove $KILLSWITCH and try again."
+    fi
+}
 
 TMP_DIR="$(mktemp -d -t tingle.XXXXXX)"

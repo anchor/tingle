@@ -4,6 +4,8 @@ set -e
 
 . ${TINGLE_PREFIX:="/usr"}/lib/tingle/common
 
+abort_on_killswitch
+
 usage() {
     cat - >&2 <<EOF
 Usage: reboot-politely
