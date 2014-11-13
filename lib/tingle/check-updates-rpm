@@ -2,7 +2,7 @@
 
 set -e
 
-. ${TINGLE_PREFIX:="/usr"}/lib/tingle/common
+. "${TINGLE_PREFIX:=/usr}/lib/tingle/common"
 
 usage() {
     cat - >&2 <<EOF
@@ -17,8 +17,8 @@ do_or_die /usr/bin/yum clean metadata >/dev/null
 
 TMP="${TMP_DIR}/pkg-list"
 
-if [ ! -f $UNIMPORTANT ]; then
-    do_or_die touch $UNIMPORTANT
+if [ ! -f "$UNIMPORTANT" ]; then
+    do_or_die touch "$UNIMPORTANT"
 fi
 ignore_rvs=( 100 )
 do_or_die "$BIGPTY" 300 20 /usr/bin/yum -q check-update | \
@@ -36,10 +36,10 @@ do_or_die "$BIGPTY" 300 20 /usr/bin/yum -q check-update | \
           print name " " version;
       }
   }' | \
-  grep -v -f $UNIMPORTANT | \
-  sort >$TMP
-cat $TMP
-if [ $(cat $TMP | wc -l) -gt 0 ]; then
+  grep -v -f "$UNIMPORTANT" | \
+  sort >"$TMP"
+cat "$TMP"
+if [ "$(wc -l <"$TMP")" -gt 0 ]; then
     # Resolve dependencies if we have the tsflags plugin installed and 
     # enabled.  yum check-update does not do this work itself.
     pluginenabled="${TINGLE_PREFIX}/lib/tingle/yum-plugin-enabled"

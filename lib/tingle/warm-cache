@@ -2,7 +2,7 @@
 
 set -e
 
-. ${TINGLE_PREFIX:="/usr"}/lib/tingle/common
+. "${TINGLE_PREFIX:=/usr}/lib/tingle/common"
 
 usage() {
     cat - >&2 <<EOF

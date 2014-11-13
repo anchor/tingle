@@ -31,19 +31,19 @@ abort() {
     # what syslog priorities are for.
 
     log_error "$@"
-    echo "$ABORTAG $@" >&4
+    echo "$ABORTAG" "$@" >&4
     exit_clean 2
 }
 
 error() {
     log_error "$@"
-    echo "$ERRTAG $@" >&4
+    echo "$ERRTAG" "$@" >&4
     exit_clean 1
 }
 
 warning() {
     log_warning "$@"
-    debug "$WARNTAG $@"
+    debug "$WARNTAG" "$@"
 }
 
 debug() {
@@ -57,7 +57,7 @@ debug() {
 }
 
 buffer() {
-    echo "$TMP_DIR/$(echo "$(date +%s)-$RANDOM-$@"  | sed "s/[ \t/-]//g")"
+    echo "$TMP_DIR/$(echo "$(date +%s)-$RANDOM" | sed "s/[ \t/-]//g")"
 }
 
 # For commands that return non-zero without actually failing.
@@ -67,7 +67,7 @@ do_ignore_derp() {
         exec 2>/dev/null
     fi
 
-    $@ || true
+    "$@" || true
 
     exec 2>&4
 }
@@ -76,21 +76,21 @@ do_or_die() {
     local b i old_opts rv suppress=no
 
     if ! is_interactive ; then
-        b="$(buffer $@)"
+        b="$(buffer)"
         exec 2>"$b"
     fi
     old_opts="$-"
     set +e
-    $@
+    "$@"
     rv=$?
     if echo "$old_opts" | grep -q e; then
         set -e
     fi
     exec 2>&4
-    if [ $rv -ne 0 ]; then
-        if [ ! -z $ignore_rvs ]; then
+    if [ "$rv" -ne 0 ]; then
+        if [ ! -z "$ignore_rvs" ]; then
             for (( i=0 ; i < ${#ignore_rvs[@]} ; i++ )); do
-                if [ $rv -eq "${ignore_rvs[$i]}" ]; then
+                if [ "$rv" -eq "${ignore_rvs[$i]}" ]; then
                     suppress=yes
                 fi
             done
@@ -101,7 +101,7 @@ do_or_die() {
                 cat "$b" >&2
                 echo >&2
             fi
-            error "\`$@' returned non-zero"
+            error "\`$*' returned non-zero"
         else
             return $rv
         fi
@@ -115,12 +115,12 @@ execd() {
         warning "$d is not a valid hook scripts directory"
     else
         debug "Scanning $d for hook scripts"
-        for i in $(find "${d}" -mindepth 1 -maxdepth 1 -type f); do
+        find "${d}" -mindepth 1 -maxdepth 1 -type f | while read i; do
             if [ -x "$i" ]; then
                 debug "Executing $i"
                 if ! is_interactive ; then
-                    b_out="$(buffer $i)"
-                    b_err="$(buffer $i)"
+                    b_out="$(buffer)"
+                    b_err="$(buffer)"
                     exec 1>"$b_out"
                     exec 2>"$b_err"
                 fi
@@ -149,9 +149,9 @@ exit_clean() {
     local STATUS
 
     STATUS=0
-    [ -n "$1" ] && STATUS=$1
+    [ -n "$1" ] && STATUS="$1"
     nuke_tmp
-    exit $STATUS
+    exit "$STATUS"
 }
 
 handle_error() {
@@ -160,7 +160,7 @@ handle_error() {
     # A trap set on ERR is still hot even when set -e is not in effect.  
     # I don't really care about failures outside of set -e sections.
     if echo "$-" | grep -q e; then
-        exit_clean $rv
+        exit_clean "$rv"
     fi
 }
 
@@ -185,7 +185,7 @@ invoke_os_flavour() {
 
     FLAVA="${TINGLE_PREFIX}/lib/tingle/${BASE}-${SUFFIX}"
     if [ -x "$FLAVA" ]; then
-        debug "Running $(basename $FLAVA)"
+        debug "Running ${FLAVA##*/}"
         old_opts="$-"
         set +e
         do_or_die "$FLAVA"
@@ -193,7 +193,7 @@ invoke_os_flavour() {
         if echo "$old_opts" | grep -q e; then
             set -e
         fi
-        return $rv
+        return "$rv"
     else
         error "Could not execute $FLAVA"
     fi
@@ -239,7 +239,7 @@ os_flavour() {
 abort_on_killswitch() {
     # All potentially disastrous automated processes need a killswitch
     # within easy reach.
-    if [ -f $KILLSWITCH ]; then
+    if [ -f "$KILLSWITCH" ]; then
         abort "Aborting on killswitch.  Remove $KILLSWITCH and try again."
     fi
 }

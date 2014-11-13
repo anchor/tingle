@@ -2,7 +2,7 @@
 
 set -e
 
-. ${TINGLE_PREFIX:="/usr"}/lib/tingle/common
+. "${TINGLE_PREFIX:=/usr}/lib/tingle/common"
 
 abort_on_killswitch
 
@@ -22,7 +22,7 @@ if [ $# -eq 0 ]; then
 
 Please save all open work and log out."
 elif [ $# -eq 1 ]; then
-    if [ $1 = "-h" -o $1 = "--help" ]; then
+    if [ "$1" = "-h" -o "$1" = "--help" ]; then
         usage
     fi
     MESSAGE="$1"
@@ -31,7 +31,7 @@ elif [ $# -eq 2 ]; then
     MESSAGE="$2"
 fi
 
-if ! echo $MINUTES | egrep -q '^[[:digit:]]+$'; then
+if ! echo "$MINUTES" | egrep -q '^[[:digit:]]+$'; then
     usage
 fi
 
@@ -51,13 +51,13 @@ EOF
     # it feels like it executes at the next *turn of the minute*, which is
     # almost certainly less than one real minute away.  Adding one `extra'
     # minute will better match expectations.
-    MINUTES=$(($MINUTES + 1))
+    MINUTES=$((MINUTES + 1))
 
     # Do not use shutdown with a large time delay as that would block this
     # program for minutes at a time.  Behaviour like that would grow tiring
     # if you were tingling from Func or MCollective.
     job=$(echo "/sbin/shutdown -fr now" | \
-      at now +${MINUTES} minutes 2>&1 | \
+      at now "+${MINUTES}" minutes 2>&1 | \
       awk '/^job/ { print $2; }')
 
     debug "Reboot pending.  \`atrm ${job}' to abort."

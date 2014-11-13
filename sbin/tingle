@@ -2,7 +2,7 @@
 
 set -e
 
-. ${TINGLE_PREFIX:="/usr"}/lib/tingle/common
+. "${TINGLE_PREFIX:=/usr}/lib/tingle/common"
 
 usage() {
     cat - >&2 <<EOF
@@ -17,7 +17,7 @@ EOF
 
 updates_pending() {
     set +e
-    ${TINGLE_PREFIX}/lib/tingle/check-updates
+    "${TINGLE_PREFIX}/lib/tingle/check-updates"
     rv=$?
     set -e
     if [ $rv -eq 100 ]; then
@@ -45,22 +45,22 @@ case $action in
     ;;
     warm)
         if updates_pending >/dev/null ; then
-            ${TINGLE_PREFIX}/lib/tingle/warm-cache
+            "${TINGLE_PREFIX}/lib/tingle/warm-cache"
         fi
     ;;
     apply)
         abort_on_killswitch
         if updates_pending >/dev/null ; then
-            ${TINGLE_PREFIX}/lib/tingle/warm-cache
-            ${TINGLE_PREFIX}/lib/tingle/apply-updates
+            "${TINGLE_PREFIX}/lib/tingle/warm-cache"
+            "${TINGLE_PREFIX}/lib/tingle/apply-updates"
         fi
     ;;
     reboot)
         abort_on_killswitch
         if updates_pending >/dev/null ; then
-            ${TINGLE_PREFIX}/lib/tingle/warm-cache
-            ${TINGLE_PREFIX}/lib/tingle/apply-updates
-            ${TINGLE_PREFIX}/lib/tingle/reboot
+            "${TINGLE_PREFIX}/lib/tingle/warm-cache"
+            "${TINGLE_PREFIX}/lib/tingle/apply-updates"
+            "${TINGLE_PREFIX}/lib/tingle/reboot"
         fi
     ;;
     *)

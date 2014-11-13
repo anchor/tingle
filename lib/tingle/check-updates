@@ -2,7 +2,7 @@
 
 set -e
 
-. ${TINGLE_PREFIX:="/usr"}/lib/tingle/common
+. "${TINGLE_PREFIX:=/usr}/lib/tingle/common"
 
 usage() {
     cat - >&2 <<EOF
@@ -21,4 +21,4 @@ set -e
 
 execd /etc/tingle/hooks/post-check.d
 
-exit_clean $rv
+exit_clean "$rv"
