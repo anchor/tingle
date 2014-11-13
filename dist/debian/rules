@@ -38,8 +38,8 @@ binary-indep: build install
 	dh_strip
 	dh_compress
 	dh_fixperms
+	dh_pysupport
 	dh_installdeb
-	dh_shlibdeps
 	dh_gencontrol
 	dh_md5sums
 	dh_builddeb
