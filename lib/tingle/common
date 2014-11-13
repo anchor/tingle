@@ -7,7 +7,12 @@ SYSLOGTAG="tingle"
 
 export PATH=/usr/sbin:/usr/bin:/sbin:/bin
 
-UNIMPORTANT=/etc/tingle/unimportant-packages
+TINGLE_ROOT=
+if [ "${TINGLE_PREFIX}" != "/usr" ]; then
+    TINGLE_ROOT="${TINGLE_PREFIX}"
+fi
+UNIMPORTANT="${TINGLE_ROOT}/etc/tingle/unimportant-packages"
+KILLSWITCH="${TINGLE_ROOT}/etc/tingle/noupdate"
 
 BIGPTY="${TINGLE_PREFIX}/lib/tingle/bigpty"
 
@@ -233,7 +238,6 @@ os_flavour() {
 
 # All potentially disastrous automated processes need a killswitch 
 # within easy reach.
-KILLSWITCH="${TINGLE_PREFIX}/etc/tingle/noupdate"
 if [ -f $KILLSWITCH ]; then
     abort "Aborting on killswitch.  Remove $KILLSWITCH and try again."
 fi
