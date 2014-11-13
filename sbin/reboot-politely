@@ -39,12 +39,6 @@ LINK=$(readlink /sbin/shutdown 2>/dev/null || :)
 if [ "${LINK##*/}" = "systemctl" ]; then
     do_or_die /sbin/shutdown --reboot "+${MINUTES}" "$MESSAGE"
 else
-    cat - >/etc/nologin <<EOF
-A reboot of this system has been scheduled.
-
-Please try again in five minutes.
-EOF
-
     echo "$MESSAGE" | wall
 
     # If an atd job is scheduled with timing arguments of `now +1 minutes',
