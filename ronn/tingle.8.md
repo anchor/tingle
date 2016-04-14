@@ -21,9 +21,8 @@ operating system.
 
 tingle was designed to take aggressive charge over an environment 
 scaling many hundreds of heterogeneous systems, where the risk and cost 
-of a single compromised system exceeded the likelihood and cost of a 
-faulty update.  Carefully orchestrated autonomous operation is possible 
-with the aid of tools like Func or The Marionette Collective.
+of a single compromised system exceeded the likelihood and cost of a
+faulty update.
 
 If precise change management is a staple of your environment, ensure 
 your local package repositories contain only those updates you are 

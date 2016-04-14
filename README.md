@@ -20,9 +20,7 @@ from use:
 tingle was designed to take aggressive charge over an environment
 scaling many hundreds of heterogeneous systems, where the risk and cost
 of a single compromised system exceeded the likelihood and cost of a
-faulty update (regression).  Carefully orchestrated autonomous operation
-is possible with the aid of tools like [Func][] or [The Marionette
-Collective][].
+faulty update (regression).
 
 If precise change management is a staple of your environment, ensure
 your local package repositories contain only those updates you are
@@ -35,9 +33,6 @@ tingle hook scripts and automatically executed at precise points in the
 patch process.  For instance, a site's configuration management system
 could distribute a tingle hook to have a host temporarily check itself
 out of the site's availability monitoring system before rebooting.
-
-[Func]: https://fedorahosted.org/func/
-[The Marionette Collective]: http://marionette-collective.org/
 
 
 ## Supported operating systems

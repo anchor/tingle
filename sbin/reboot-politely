@@ -47,9 +47,6 @@ else
     # minute will better match expectations.
     MINUTES=$((MINUTES + 1))
 
-    # Do not use shutdown with a large time delay as that would block this
-    # program for minutes at a time.  Behaviour like that would grow tiring
-    # if you were tingling from Func or MCollective.
     job=$(echo "/sbin/shutdown -fr now" | \
       at now "+${MINUTES}" minutes 2>&1 | \
       awk '/^job/ { print $2; }')
