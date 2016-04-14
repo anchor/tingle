@@ -1,17 +1,16 @@
-RELEASE ?= $(shell cat RELEASE)
-
-SOURCES = LICENCE \
-	Makefile \
-	README.md \
-	RELEASE \
-	$(shell find etc -type f) \
-	$(shell find etc/tingle/hooks -type f | \
-		perl -nle 'use File::Basename; print dirname $$_ if -f $$_;' | \
-		sort | uniq -c | awk '{ if ($$1 == "1") print $$2; }') \
-	$(shell find lib -type f) \
-	$(shell find ronn -type f) \
-	$(shell find sbin -type f) \
-	$(shell find share -type f)
+VERSION := $(shell \
+	git describe --dirty --tags --long --match 'v*' 2>/dev/null \
+	| awk -F '-' -v OFS='-' '\
+		{ \
+			sub(/^v/, "", $$1); \
+			if ($$NF == "dirty") { \
+				print $$0 \
+			} else { \
+				print $$1 \
+			} \
+		}; \
+		END { if (NR == 0) { exit 1 } }' \
+	|| echo '0-unknown')
 
 
 all: doc
@@ -20,26 +19,17 @@ all: doc
 
 
 clean:
-	rm -f dist/tingle-$(RELEASE).tar.gz
+	rm -f dist/tingle-*.tar.gz
 
 .PHONY: clean
 
 
-dist: dist/tingle-$(RELEASE).tar.gz
+dist:
+	mkdir -p 'dist'
+	git archive --worktree-attributes --prefix='tingle-$(VERSION)/' \
+		--output='dist/tingle-$(VERSION).tar.gz' HEAD
 
 .PHONY: dist
-
-
-dist/tingle-$(RELEASE).tar.gz: $(SOURCES)
-	@if tar --help | tail -n 1 | grep -q bsdtar ; then \
-		tar --exclude '.*.swp' --exclude '.gitignore' \
-			-cz -f $@ -s ',^,tingle-$(RELEASE)/,' $(SOURCES) ; \
-	else \
-		tar --exclude '.*.swp' --exclude '.gitignore' \
-			-cz -f $@ --transform 's,^,tingle-$(RELEASE)/,' $(SOURCES) ; \
-	fi
-
-.PHONY: dist/tingle-$(RELEASE).tar.gz
 
 
 install: doc
