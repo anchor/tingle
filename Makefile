@@ -19,7 +19,7 @@ all: doc
 
 
 clean:
-	rm -f dist/tingle-*.tar.gz
+	rm -fr 'dist'
 
 .PHONY: clean
 

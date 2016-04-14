@@ -1,6 +1,1 @@
-*.deb
-/debian/
-build-stamp
-configure-stamp
-tingle-*.rpm
-tingle-*.tar.gz
+/dist/
