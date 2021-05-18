@@ -1,7 +1,7 @@
 tingle(8) - (n): a thin patch
 =============================
 
-tingle is a tool for applying packaged software updates.  It works by
+tingle is a server side tool for applying packaged software updates.  It works by
 wrapping a thin shell program around your operating system's native
 package manager.  Pesky differences between package management
 implementations are abstracted away to simplify patch procedure.
